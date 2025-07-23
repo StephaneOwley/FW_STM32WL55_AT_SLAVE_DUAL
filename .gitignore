@@ -1,0 +1,50 @@
+# Fichiers de build STM32CubeIDE
+**/Debug/
+**/Release/
+**/build/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Fichiers temporaires
+*.su
+*.dep
+*.o
+*.d
+*.lst
+*.map
+*.sdf
+*.suo
+*.user
+*.log
+*.bak
+*.tmp
+*.swp
+*.swo
+
+# Backup fichiers
+*~
+*.orig
+
+# Fichiers générés
+*.bin
+*.elf
+*.hex
+*.list
+
+# CubeIDE auto-générés
+.ipch/
+.cproject
+.project
+.settings/
+.metadata/
+*.launch
+*.log
+
+# STM32CubeIDE workspace settings
+STM32CubeIDE/.settings/
+STM32CubeIDE/.project
+STM32CubeIDE/.cproject
+STM32CubeIDE/.mxproject
+STM32CubeIDE/.mxresources
