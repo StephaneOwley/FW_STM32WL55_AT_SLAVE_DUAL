@@ -20,12 +20,12 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "platform.h"
-#include "mbmuxif_sigfox.h"
+#include "mbmuxif_owley.h"
 #include "mbmuxif_sys.h"
 #include "sys_app.h"
 #include "stm32_mem.h"
 #include "stm32_seq.h"
-#include "sigfox_mbwrapper.h"
+#include "owley_mbwrapper.h"
 #include "app_version.h"
 #include "utilities_def.h"
 /* USER CODE BEGIN Includes */

@@ -30,8 +30,8 @@
 #include "stm32_seq.h"
 #include "utilities_def.h"
 #include "sgfx_command.h"
-#include "sigfox_mbwrapper.h"
-#include "sigfox_info.h"
+#include "owley_mbwrapper.h"
+#include "owley_info.h"
 #include "mbmuxif_sys.h"
 
 /* USER CODE BEGIN Includes */

@@ -21,18 +21,17 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "platform.h"
-#include "sigfox_mbwrapper.h"
+#include "owley_mbwrapper.h"
 #include "platform.h"
 #include "mbmux.h"
 #include "mbmuxif_sys.h"
 #include "msg_id.h"
-#include "mbmuxif_sigfox.h"
+#include "mbmuxif_owley.h"
 #include "stm32_mem.h"
 #include "sys_app.h"
 #include "st_sigfox_api.h"
-//#include "sigfox_monarch_api.h"
 #include "sgfx_app.h"
-#include "sigfox_info.h"
+#include "owley_info.h"
 
 /* USER CODE BEGIN Includes */
 

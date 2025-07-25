@@ -34,7 +34,7 @@
 #include "mbmuxif_sys.h"
 #include "mbmuxif_trace.h"
 #include "mbmuxif_radio.h"
-#include "mbmuxif_sigfox.h"
+#include "mbmuxif_owley.h"
 #include "sgfx_app.h"
 #ifdef ALLOW_KMS_VIA_MBMUX /* currently not supported */
 /* #include "mbmuxif_kms.h" */
