@@ -224,17 +224,6 @@ static const struct ATCommand_s ATCommand[] =
   },
 
   {
-    .string = AT_MN,
-    .size_string = sizeof(AT_MN) - 1,
-#ifndef NO_HELP
-    .help_string = "AT"AT_MN "=<timeOut><CR> TimeOut in seconds. Start Monarch Scan\r\n",
-#endif /* !NO_HELP */
-    .get = AT_return_error,
-    .set = AT_scan_mn,
-    .run = AT_scan_mn,
-  },
-
-  {
     .string = AT_TM,
     .size_string = sizeof(AT_TM) - 1,
 #ifndef NO_HELP

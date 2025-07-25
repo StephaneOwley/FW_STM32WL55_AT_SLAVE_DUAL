@@ -29,7 +29,6 @@
 #include "stm32_tiny_sscanf.h"
 #include "app_version.h"
 #include "sgfx_eeprom_if.h"
-#include "sigfox_monarch_api.h"
 #include "se_nvm.h"
 #include "adc_if.h"
 #include "sys_app.h"
@@ -77,16 +76,7 @@
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
-#ifdef MN_ON
 
-/**
-  * @brief      monarch scan callback
-  * @param[out] rc_bit_mask bit mask of detected region configuration
-  * @param[out] rssi of the detected monarch signal
-  * @retval     SFX_ERR_NONE
-  */
-static sfx_u8 app_callback_handler(sfx_u8 rc_bit_mask, sfx_s16 rssi);
-#endif /* MN_ON */
 /**
 
   * @brief  Print n bytes as %02x
@@ -450,10 +440,6 @@ ATEerror_t AT_version_get(const char *param)
   print_n(version, size);
   AT_PRINTF("\r\n");
 
-  SIGFOX_API_get_version(&version, &size, VERSION_MONARCH);
-  print_n(version, size);
-  AT_PRINTF("\r\n");
-
   return AT_OK;
   /* USER CODE BEGIN AT_version_get_2 */
 
@@ -731,110 +717,6 @@ ATEerror_t AT_test_pn(const char *param)
   /* USER CODE END AT_test_pn_2 */
 }
 
-ATEerror_t AT_scan_mn(const char *param)
-{
-  /* USER CODE BEGIN AT_scan_mn_1 */
-
-  /* USER CODE END AT_scan_mn_1 */
-#ifdef MN_ON
-  ATEerror_t at_status = AT_OK;
-
-  sfx_u8 rc_capabilities_bit_mask = 0x7F; /*all RCs from RC1 to RC7*/
-  sfx_u16 timer = 5;
-
-  sfx_rc_enum_t sfx_rc = E2P_Read_Rc();
-
-  sfx_u32 config_words[3] = {0};
-
-  E2P_Read_ConfigWords(sfx_rc, config_words);
-
-  if (tiny_sscanf(param, "%u", &timer) > 1)
-  {
-    return AT_PARAM_ERROR;
-  }
-  SIGFOX_API_close();
-
-  SIGFOX_MONARCH_API_execute_rc_scan(rc_capabilities_bit_mask, timer, SFX_TIME_S, app_callback_handler);
-
-  UTIL_SEQ_WaitEvt(1 << CFG_SEQ_Evt_Monarch);
-
-  if (SIGFOX_reopen_and_reconf(sfx_rc, config_words) != SFX_ERR_NONE)
-  {
-    at_status = AT_RECONF_ERROR;
-  }
-
-  return at_status;
-#else
-  return AT_ERROR;
-#endif /* MN_ON */
-  /* USER CODE BEGIN AT_scan_mn_2 */
-
-  /* USER CODE END AT_scan_mn_2 */
-}
-
-#ifdef MN_ON
-static sfx_u8 app_callback_handler(sfx_u8 rc_bit_mask, sfx_s16 rssi)
-{
-  /* USER CODE BEGIN app_callback_handler_1 */
-
-  /* USER CODE END app_callback_handler_1 */
-  switch (rc_bit_mask)
-  {
-    case 0:
-    {
-      AT_PRINTF("NO RC found\r\n");
-      break;
-    }
-    case (1<<SFX_BITFIELD_SHIFT_RC1):
-    {
-      AT_PRINTF("RC 1 found\r\n");
-      break;
-    }
-    case (1<<SFX_BITFIELD_SHIFT_RC2):
-    {
-      AT_PRINTF("RC 2 found\r\n");
-      break;
-    }
-    case (1<<SFX_BITFIELD_SHIFT_RC3):
-    {
-      AT_PRINTF("RC 3 found\r\n");
-      break;
-    }
-    case (1<<SFX_BITFIELD_SHIFT_RC4):
-    {
-      AT_PRINTF("RC 4 found\r\n");
-      break;
-    }
-    case (1<<SFX_BITFIELD_SHIFT_RC5):
-    {
-      AT_PRINTF("RC 5 found\r\n");
-      break;
-    }
-    case (1<<SFX_BITFIELD_SHIFT_RC6):
-    {
-      AT_PRINTF("RC 6 found\r\n");
-      break;
-    }
-    case (1<<SFX_BITFIELD_SHIFT_RC7):
-    {
-      AT_PRINTF("RC 7 found\r\n");
-      break;
-    }
-    default:
-      AT_PRINTF("RC %d found\r\n", rc_bit_mask);
-      break;
-  }
-
-  UTIL_SEQ_SetEvt(1 << CFG_SEQ_Evt_Monarch);
-
-  return SFX_ERR_NONE;
-  /* USER CODE BEGIN app_callback_handler_2 */
-
-  /* USER CODE END app_callback_handler_2 */
-}
-
-#endif /* MN_ON */
-
 ATEerror_t AT_test_mode(const char *param)
 {
   /* USER CODE BEGIN AT_test_mode_1 */
@@ -922,11 +804,7 @@ ATEerror_t AT_test_mode(const char *param)
 
   if ((test_mode >= 7) && (test_mode <= 10))
   {
-#ifdef MN_ON
-    sfx_error = ST_ADDON_SIGFOX_RF_PROTOCOL_API_monarch_test_mode(rc, tm, rc_capabilities_bit_mask);
-#else
     at_status = AT_ERROR;
-#endif /* MN_ON */
   }
   else if (test_mode == 12)
   {

@@ -30,7 +30,7 @@
 #include "stm32_mem.h"
 #include "sys_app.h"
 #include "st_sigfox_api.h"
-#include "sigfox_monarch_api.h"
+//#include "sigfox_monarch_api.h"
 #include "sgfx_app.h"
 #include "sigfox_info.h"
 
@@ -532,94 +532,6 @@ sfx_error_t ADDON_SIGFOX_RF_PROTOCOL_API_test_mode(sfx_rc_enum_t rc_enum, sfx_te
   /* USER CODE BEGIN ADDON_SIGFOX_RF_PROTOCOL_API_test_mode_2 */
 
   /* USER CODE END ADDON_SIGFOX_RF_PROTOCOL_API_test_mode_2 */
-}
-
-sfx_error_t ST_ADDON_SIGFOX_RF_PROTOCOL_API_monarch_test_mode(sfx_rc_enum_t rc_enum, sfx_test_mode_t test_mode,
-                                                              sfx_u8 rc_capabilities)
-{
-  /* USER CODE BEGIN ST_ADDON_SIGFOX_RF_PROTOCOL_API_monarch_test_mode_1 */
-
-  /* USER CODE END ST_ADDON_SIGFOX_RF_PROTOCOL_API_monarch_test_mode_1 */
-  MBMUX_ComParam_t *com_obj;
-  uint32_t *com_buffer;
-  uint16_t i = 0;
-  uint32_t ret;
-
-  com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
-  com_obj->MsgId = SIGFOX_API_MONARCH_TEST_MODE_ID;
-  com_buffer = com_obj->ParamBuf;
-  com_buffer[i++] = (uint32_t) rc_enum;
-  com_buffer[i++] = (uint32_t) test_mode;
-  com_buffer[i++] = (uint32_t) rc_capabilities;
-  com_obj->ParamCnt = i;
-  MBMUXIF_SigfoxSendCmd();
-  /* waiting for event */
-  /* once event is received and semaphore released: */
-
-  ret = com_obj->ReturnVal;
-  return (sfx_error_t) ret;
-  /* USER CODE BEGIN ST_ADDON_SIGFOX_RF_PROTOCOL_API_monarch_test_mode_2 */
-
-  /* USER CODE END ST_ADDON_SIGFOX_RF_PROTOCOL_API_monarch_test_mode_2 */
-}
-
-sfx_error_t SIGFOX_MONARCH_API_execute_rc_scan(sfx_u8 rc_capabilities_bit_mask, sfx_u16 timer,
-                                               sfx_timer_unit_enum_t unit, sfx_u8(* app_callback_handler)(sfx_u8 rc_bit_mask, sfx_s16 rssi))
-{
-  /* USER CODE BEGIN SIGFOX_MONARCH_API_execute_rc_scan_1 */
-
-  /* USER CODE END SIGFOX_MONARCH_API_execute_rc_scan_1 */
-  MBMUX_ComParam_t *com_obj;
-  uint32_t *com_buffer;
-  uint16_t i = 0;
-  uint32_t ret;
-
-  if (app_callback_handler == NULL)
-  {
-    return SFX_ERR_MONARCH_API_EXECUTE_RC_SCAN_NULL_CALLBACK;
-  }
-
-  /*Init callback on M4 side*/
-  app_cb = app_callback_handler;
-
-  com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
-  com_obj->MsgId = SIGFOX_API_MONARCH_TEST_EXEC_RC_SCAN_ID;
-  com_buffer = com_obj->ParamBuf;
-  com_buffer[i++] = (uint32_t) rc_capabilities_bit_mask;
-  com_buffer[i++] = (uint32_t) timer;
-  com_buffer[i++] = (uint32_t) unit;
-  com_buffer[i++] = (uint32_t) app_cb;
-  com_obj->ParamCnt = i;
-  MBMUXIF_SigfoxSendCmd();
-  /* waiting for event */
-  /* once event is received and semaphore released: */
-
-  ret = com_obj->ReturnVal;
-  return (sfx_error_t) ret;
-  /* USER CODE BEGIN SIGFOX_MONARCH_API_execute_rc_scan_2 */
-
-  /* USER CODE END SIGFOX_MONARCH_API_execute_rc_scan_2 */
-}
-
-sfx_error_t SIGFOX_MONARCH_API_stop_rc_scan(void)
-{
-  /* USER CODE BEGIN SIGFOX_MONARCH_API_stop_rc_scan_1 */
-
-  /* USER CODE END SIGFOX_MONARCH_API_stop_rc_scan_1 */
-  MBMUX_ComParam_t *com_obj;
-  uint32_t ret;
-
-  com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
-  com_obj->MsgId = SIGFOX_API_MONARCH_STOP_RC_SCAN_ID;
-  com_obj->ParamCnt = 0;
-  MBMUXIF_SigfoxSendCmd();
-  /* waiting for event */
-  /* once event is received and semaphore released: */
-  ret = com_obj->ReturnVal;
-  return (sfx_error_t) ret;
-  /* USER CODE BEGIN SIGFOX_MONARCH_API_stop_rc_scan_2 */
-
-  /* USER CODE END SIGFOX_MONARCH_API_stop_rc_scan_2 */
 }
 
 void SigfoxInfo_Init(void)
