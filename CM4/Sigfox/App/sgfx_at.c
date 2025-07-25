@@ -726,14 +726,13 @@ ATEerror_t AT_test_mode(const char *param)
   sfx_test_mode_t tm;
   sfx_rc_enum_t rc = SFX_RC1;
   sfx_error_t sfx_error;
-#ifdef MN_ON
-  sfx_u8 rc_capabilities_bit_mask = 0x7F;
-#endif /* MN_ON */
+
   sfx_u32 config_words_restore[3] = {0};
 
   sfx_rc_enum_t rc_enum_restore = E2P_Read_Rc();
 
   ATEerror_t at_status = AT_OK;
+  sfx_error = SFX_ERR_NONE;
 
   if ((param[0] == '1') && (param[1] == ','))
   {
