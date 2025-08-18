@@ -31,8 +31,8 @@
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* payload sizes definition */
-#define SGFX_MAX_UL_PAYLOAD_SIZE 12
-#define SGFX_MAX_DL_PAYLOAD_SIZE  8
+#define OWLEY_MAX_UL_PAYLOAD_SIZE 12
+#define OWLEY_MAX_DL_PAYLOAD_SIZE  8
 
 /* Exported function --------------------------------------------------------*/
 

@@ -185,7 +185,7 @@ ATEerror_t AT_SendBit(const char *param)
   uint32_t dlFlag = 0;
   uint32_t txRepeat = 1;
   int32_t nbParam;
-  uint8_t dl_msg[SGFX_MAX_DL_PAYLOAD_SIZE] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+  uint8_t dl_msg[OWLEY_MAX_DL_PAYLOAD_SIZE] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
   sfx_error_t error;
 
   nbParam = tiny_sscanf(param, "%u,%u,%d", &Bit, &dlFlag, &txRepeat);
@@ -218,7 +218,7 @@ ATEerror_t AT_SendBit(const char *param)
 
     if (error == SFX_ERR_NONE)
     {
-      print_rx(dl_msg, SGFX_MAX_DL_PAYLOAD_SIZE * 2);
+      print_rx(dl_msg, OWLEY_MAX_DL_PAYLOAD_SIZE * 2);
     }
     else if (error == SFX_ERR_INT_GET_RECEIVED_FRAMES_TIMEOUT)
     {
@@ -241,8 +241,8 @@ ATEerror_t AT_SendFrame(const char *param)
   /* USER CODE BEGIN AT_SendFrame_1 */
 
   /* USER CODE END AT_SendFrame_1 */
-  uint8_t ul_msg[SGFX_MAX_UL_PAYLOAD_SIZE] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-  uint8_t dl_msg[SGFX_MAX_DL_PAYLOAD_SIZE] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+  uint8_t ul_msg[OWLEY_MAX_UL_PAYLOAD_SIZE] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+  uint8_t dl_msg[OWLEY_MAX_DL_PAYLOAD_SIZE] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
   uint32_t dlFlag = 0;   /* default */
   uint32_t  ul_size = 0;
   uint32_t nbParam;
@@ -287,7 +287,7 @@ ATEerror_t AT_SendFrame(const char *param)
 
     if (error == SFX_ERR_NONE)
     {
-      print_rx(dl_msg, SGFX_MAX_DL_PAYLOAD_SIZE * 2);
+      print_rx(dl_msg, OWLEY_MAX_DL_PAYLOAD_SIZE * 2);
     }
     else if (error == SFX_ERR_INT_GET_RECEIVED_FRAMES_TIMEOUT)
     {
@@ -310,8 +310,8 @@ ATEerror_t AT_SendHexFrame(const char *param)
   /* USER CODE BEGIN AT_SendHexFrame_1 */
 
   /* USER CODE END AT_SendHexFrame_1 */
-  uint8_t ul_msg[SGFX_MAX_UL_PAYLOAD_SIZE] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-  uint8_t dl_msg[SGFX_MAX_DL_PAYLOAD_SIZE] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+  uint8_t ul_msg[OWLEY_MAX_UL_PAYLOAD_SIZE] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+  uint8_t dl_msg[OWLEY_MAX_DL_PAYLOAD_SIZE] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
   uint32_t dlFlag = 0;   /* default */
   uint32_t  ul_size = 0;
   uint32_t nbParam;
@@ -323,7 +323,7 @@ ATEerror_t AT_SendHexFrame(const char *param)
 
   tiny_sscanf(param, "%u", &ul_size);
 
-  if (ul_size > SGFX_MAX_UL_PAYLOAD_SIZE)
+  if (ul_size > OWLEY_MAX_UL_PAYLOAD_SIZE)
   {
     return AT_PARAM_ERROR;
   }
@@ -367,7 +367,7 @@ ATEerror_t AT_SendHexFrame(const char *param)
 
     if (error == SFX_ERR_NONE)
     {
-      print_rx(dl_msg, SGFX_MAX_DL_PAYLOAD_SIZE * 2);
+      print_rx(dl_msg, OWLEY_MAX_DL_PAYLOAD_SIZE * 2);
     }
     else if (error == SFX_ERR_INT_GET_RECEIVED_FRAMES_TIMEOUT)
     {
@@ -1426,7 +1426,7 @@ static ErrorStatus stringToData(const char *str, uint8_t *data, uint32_t *dataSi
       return ERROR;
     }
     ii++;
-    if (ii > SGFX_MAX_UL_PAYLOAD_SIZE)
+    if (ii > OWLEY_MAX_UL_PAYLOAD_SIZE)
     {
       return ERROR;
     }

@@ -53,13 +53,13 @@
 #endif /* MAX */
 #define NB_ELEMENTS_MAX 3
 
-#define SGFX_OPEN_SIZE       (sizeof(sfx_rc_t))
-#define SGFX_SEND_SIZE       ((SGFX_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8)) + (SGFX_MAX_DL_PAYLOAD_SIZE * sizeof(sfx_u8)))
-#define SGFX_SET_CONFIG_SIZE (NB_ELEMENTS_MAX * sizeof(sfx_u32))
-#define SGFX_START_TX_SIZE   (sizeof(sfx_modulation_type_t))
-#define SGFX_GET_VER_SIZE    (sizeof(sfx_u32) + sizeof(sfx_u8))
-#define SGFX_GET_PAC_SIZE    (PAC_LENGTH * sizeof(sfx_u8))
-#define SGFX_MBWRAP_SHBUF_SIZE MAX(MAX(MAX(SGFX_OPEN_SIZE, SGFX_SEND_SIZE), MAX(SGFX_SET_CONFIG_SIZE, SGFX_START_TX_SIZE)), MAX(SGFX_GET_VER_SIZE, SGFX_GET_PAC_SIZE))
+#define OWLEY_OPEN_SIZE       (sizeof(sfx_rc_t))
+#define OWLEY_SEND_SIZE       ((OWLEY_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8)) + (OWLEY_MAX_DL_PAYLOAD_SIZE * sizeof(sfx_u8)))
+#define OWLEY_SET_CONFIG_SIZE (NB_ELEMENTS_MAX * sizeof(sfx_u32))
+#define OWLEY_START_TX_SIZE   (sizeof(sfx_modulation_type_t))
+#define OWLEY_GET_VER_SIZE    (sizeof(sfx_u32) + sizeof(sfx_u8))
+#define OWLEY_GET_PAC_SIZE    (PAC_LENGTH * sizeof(sfx_u8))
+#define OWLEY_MBWRAP_SHBUF_SIZE MAX(MAX(MAX(OWLEY_OPEN_SIZE, OWLEY_SEND_SIZE), MAX(OWLEY_SET_CONFIG_SIZE, OWLEY_START_TX_SIZE)), MAX(OWLEY_GET_VER_SIZE, OWLEY_GET_PAC_SIZE))
 
 /* USER CODE BEGIN PD */
 
@@ -74,7 +74,7 @@
 /**
   * @brief Sigfox buffer to exchange data between from CM4 to CM0+
   */
-UTIL_MEM_PLACE_IN_SECTION("MB_MEM1") uint8_t aSigfoxMbWrapShareBuffer[SGFX_MBWRAP_SHBUF_SIZE];
+UTIL_MEM_PLACE_IN_SECTION("MB_MEM1") uint8_t aSigfoxMbWrapShareBuffer[OWLEY_MBWRAP_SHBUF_SIZE];
 
 static sfx_u8(* app_cb)(sfx_u8 rc_bit_mask, sfx_s16 rssi);
 
@@ -171,16 +171,16 @@ sfx_error_t SIGFOX_API_send_frame(sfx_u8 *customer_data, sfx_u8 customer_data_le
 
   /* copy data from Cm4 stack memory to shared memory */
   UTIL_MEM_cpy_8((uint8_t *) aSigfoxMbWrapShareBuffer, (uint8_t *) customer_data,
-                 SGFX_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8));
-  UTIL_MEM_cpy_8((uint8_t *)(aSigfoxMbWrapShareBuffer + SGFX_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8)),
-                 (uint8_t *)customer_response, SGFX_MAX_DL_PAYLOAD_SIZE * sizeof(sfx_u8));
+                 OWLEY_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8));
+  UTIL_MEM_cpy_8((uint8_t *)(aSigfoxMbWrapShareBuffer + OWLEY_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8)),
+                 (uint8_t *)customer_response, OWLEY_MAX_DL_PAYLOAD_SIZE * sizeof(sfx_u8));
 
   com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
   com_obj->MsgId = OWLEY_SEND_FRAME_DWNL_ID;
   com_buffer = com_obj->ParamBuf;
   com_buffer[i++] = (uint32_t) aSigfoxMbWrapShareBuffer;
   com_buffer[i++] = (uint32_t) customer_data_length;
-  com_buffer[i++] = ((uint32_t) aSigfoxMbWrapShareBuffer + SGFX_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8));
+  com_buffer[i++] = ((uint32_t) aSigfoxMbWrapShareBuffer + OWLEY_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8));
   com_buffer[i++] = (uint32_t) tx_mode;
   com_buffer[i++] = (uint32_t) initiate_downlink_flag;
 
@@ -191,10 +191,10 @@ sfx_error_t SIGFOX_API_send_frame(sfx_u8 *customer_data, sfx_u8 customer_data_le
 
   /* copy back data from shared memory to Cm4 stack memory */
   UTIL_MEM_cpy_8((uint8_t *) customer_data, (uint8_t *) aSigfoxMbWrapShareBuffer,
-                 SGFX_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8));
+                 OWLEY_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8));
   UTIL_MEM_cpy_8((uint8_t *)customer_response,
-                 (uint8_t *)(aSigfoxMbWrapShareBuffer + SGFX_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8)),
-                 SGFX_MAX_DL_PAYLOAD_SIZE * sizeof(sfx_u8));
+                 (uint8_t *)(aSigfoxMbWrapShareBuffer + OWLEY_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8)),
+                 OWLEY_MAX_DL_PAYLOAD_SIZE * sizeof(sfx_u8));
 
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
@@ -223,7 +223,7 @@ sfx_error_t SIGFOX_API_send_bit(sfx_bool bit_value,
 
   /* copy data from Cm4 stack memory to shared memory */
   UTIL_MEM_cpy_8((uint8_t *)aSigfoxMbWrapShareBuffer, (uint8_t *)customer_response,
-                 SGFX_MAX_DL_PAYLOAD_SIZE * sizeof(sfx_u8));
+                 OWLEY_MAX_DL_PAYLOAD_SIZE * sizeof(sfx_u8));
 
   com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
   com_obj->MsgId = OWLEY_SEND_BIT_ID;
@@ -240,7 +240,7 @@ sfx_error_t SIGFOX_API_send_bit(sfx_bool bit_value,
 
   /* copy back data from shared memory to Cm4 stack memory */
   UTIL_MEM_cpy_8((uint8_t *)customer_response, (uint8_t *) aSigfoxMbWrapShareBuffer,
-                 SGFX_MAX_DL_PAYLOAD_SIZE * sizeof(sfx_u8));
+                 OWLEY_MAX_DL_PAYLOAD_SIZE * sizeof(sfx_u8));
 
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
