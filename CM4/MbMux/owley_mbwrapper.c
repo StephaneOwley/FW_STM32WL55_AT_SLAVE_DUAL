@@ -109,7 +109,7 @@ sfx_error_t OWLEY_API_open(sfx_rc_t *rc)
   UTIL_MEM_cpy_8((uint8_t *) aSigfoxMbWrapShareBuffer, (uint8_t *) rc, sizeof(sfx_rc_t));
 
   com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
-  com_obj->MsgId = SIGFOX_START_ID;
+  com_obj->MsgId = OWLEY_START_ID;
   com_buffer = com_obj->ParamBuf;
   com_buffer[i++] = (uint32_t) aSigfoxMbWrapShareBuffer;
   com_obj->ParamCnt = i;
@@ -136,7 +136,7 @@ sfx_error_t SIGFOX_API_close(void)
   uint32_t ret;
 
   com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
-  com_obj->MsgId = SIGFOX_STOP_ID;
+  com_obj->MsgId = OWLEY_STOP_ID;
   com_obj->ParamCnt = 0;
   MBMUXIF_SigfoxSendCmd();
   /* waiting for event */
@@ -176,7 +176,7 @@ sfx_error_t SIGFOX_API_send_frame(sfx_u8 *customer_data, sfx_u8 customer_data_le
                  (uint8_t *)customer_response, SGFX_MAX_DL_PAYLOAD_SIZE * sizeof(sfx_u8));
 
   com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
-  com_obj->MsgId = SIGFOX_SEND_FRAME_DWNL_ID;
+  com_obj->MsgId = OWLEY_SEND_FRAME_DWNL_ID;
   com_buffer = com_obj->ParamBuf;
   com_buffer[i++] = (uint32_t) aSigfoxMbWrapShareBuffer;
   com_buffer[i++] = (uint32_t) customer_data_length;
@@ -226,7 +226,7 @@ sfx_error_t SIGFOX_API_send_bit(sfx_bool bit_value,
                  SGFX_MAX_DL_PAYLOAD_SIZE * sizeof(sfx_u8));
 
   com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
-  com_obj->MsgId = SIGFOX_SEND_BIT_ID;
+  com_obj->MsgId = OWLEY_SEND_BIT_ID;
   com_buffer = com_obj->ParamBuf;
   com_buffer[i++] = (uint32_t) bit_value;
   com_buffer[i++] = (uint32_t) aSigfoxMbWrapShareBuffer;
@@ -260,7 +260,7 @@ sfx_error_t SIGFOX_API_send_outofband(sfx_oob_enum_t oob_type)
   uint32_t ret;
 
   com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
-  com_obj->MsgId = SIGFOX_SEND_OOB_ID;
+  com_obj->MsgId = OWLEY_SEND_OOB_ID;
   com_buffer = com_obj->ParamBuf;
   com_buffer[i++] = (uint32_t) oob_type;
   com_obj->ParamCnt = i;
@@ -290,7 +290,7 @@ sfx_error_t SIGFOX_API_set_std_config(sfx_u32 config_words[NB_ELEMENTS_MAX],
   UTIL_MEM_cpy_8((uint8_t *) aSigfoxMbWrapShareBuffer, (uint8_t *) config_words, NB_ELEMENTS_MAX * sizeof(sfx_u32));
 
   com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
-  com_obj->MsgId = SIGFOX_SET_STD_ID;
+  com_obj->MsgId = OWLEY_SET_STD_ID;
   com_buffer = com_obj->ParamBuf;
   com_buffer[i++] = (uint32_t) aSigfoxMbWrapShareBuffer;
   com_buffer[i++] = (uint32_t) timer_enable;
@@ -324,7 +324,7 @@ sfx_error_t SIGFOX_API_start_continuous_transmission(sfx_u32 frequency, sfx_modu
   UTIL_MEM_cpy_8((uint8_t *) aSigfoxMbWrapShareBuffer, (uint8_t *) type, sizeof(sfx_modulation_type_t));
 
   com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
-  com_obj->MsgId = SIGFOX_START_CONTINUOUS_ID;
+  com_obj->MsgId = OWLEY_START_CONTINUOUS_ID;
   com_buffer = com_obj->ParamBuf;
   com_buffer[i++] = (uint32_t) frequency;
   com_buffer[i++] = (uint32_t) aSigfoxMbWrapShareBuffer;
@@ -353,7 +353,7 @@ sfx_error_t SIGFOX_API_stop_continuous_transmission(void)
   uint32_t ret;
 
   com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
-  com_obj->MsgId = SIGFOX_STOP_CONTINUOUS_ID;
+  com_obj->MsgId = OWLEY_STOP_CONTINUOUS_ID;
   com_obj->ParamCnt = 0;
   MBMUXIF_SigfoxSendCmd();
   /* waiting for event */
@@ -385,7 +385,7 @@ sfx_error_t SIGFOX_API_get_version(sfx_u8 **version, sfx_u8 *size, sfx_version_t
   UTIL_MEM_cpy_8((uint8_t *)(aSigfoxMbWrapShareBuffer + sizeof(sfx_u32)), (uint8_t *) size, sizeof(sfx_u8));
 
   com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
-  com_obj->MsgId = SIGFOX_GET_VERSION_ID;
+  com_obj->MsgId = OWLEY_GET_VERSION_ID;
   com_buffer = com_obj->ParamBuf;
   com_buffer[i++] = (uint32_t) aSigfoxMbWrapShareBuffer;
   com_buffer[i++] = (uint32_t)(aSigfoxMbWrapShareBuffer + sizeof(sfx_u32));
@@ -425,7 +425,7 @@ sfx_error_t SIGFOX_API_get_device_id(sfx_u8 *dev_id)
   UTIL_MEM_cpy_8((uint8_t *) aSigfoxMbWrapShareBuffer, (uint8_t *) dev_id, sizeof(sfx_u32));
 
   com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
-  com_obj->MsgId = SIGFOX_GET_DEVICE_ID;
+  com_obj->MsgId = OWLEY_GET_DEVICE_ID;
   com_buffer = com_obj->ParamBuf;
   com_buffer[i++] = (uint32_t) aSigfoxMbWrapShareBuffer;
   com_obj->ParamCnt = i;
@@ -462,7 +462,7 @@ sfx_error_t SIGFOX_API_get_initial_pac(sfx_u8 *initial_pac)
   UTIL_MEM_cpy_8((uint8_t *) aSigfoxMbWrapShareBuffer, (uint8_t *) initial_pac, PAC_LENGTH * sizeof(sfx_u8));
 
   com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
-  com_obj->MsgId = SIGFOX_GET_INIT_PAC_ID;
+  com_obj->MsgId = OWLEY_GET_INIT_PAC_ID;
   com_buffer = com_obj->ParamBuf;
   com_buffer[i++] = (uint32_t) aSigfoxMbWrapShareBuffer;
   com_obj->ParamCnt = i;
@@ -491,7 +491,7 @@ sfx_error_t SIGFOX_API_set_rc_sync_period(sfx_u16 rc_sync_period)
   uint32_t ret;
 
   com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
-  com_obj->MsgId = SIGFOX_SET_RCSYNC_PERIOD_ID;
+  com_obj->MsgId = OWLEY_SET_RCSYNC_PERIOD_ID;
   com_buffer = com_obj->ParamBuf;
   com_buffer[i++] = (uint32_t) rc_sync_period;
   com_obj->ParamCnt = i;
@@ -517,7 +517,7 @@ sfx_error_t ADDON_SIGFOX_RF_PROTOCOL_API_test_mode(sfx_rc_enum_t rc_enum, sfx_te
   uint32_t ret;
 
   com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
-  com_obj->MsgId = SIGFOX_API_TEST_MODE_ID;
+  com_obj->MsgId = OWLEY_API_TEST_MODE_ID;
   com_buffer = com_obj->ParamBuf;
   com_buffer[i++] = (uint32_t) rc_enum;
   com_buffer[i++] = (uint32_t) test_mode;
@@ -541,7 +541,7 @@ void SigfoxInfo_Init(void)
   MBMUX_ComParam_t *com_obj;
 
   com_obj = MBMUXIF_GetSigfoxFeatureCmdComPtr();
-  com_obj->MsgId = SIGFOX_INFO_INIT_ID;
+  com_obj->MsgId = OWLEY_INFO_INIT_ID;
   com_obj->ParamCnt = 0;
   MBMUXIF_SigfoxSendCmd();
   /* waiting for event */
@@ -559,7 +559,7 @@ SigfoxInfo_t *SigfoxInfo_GetPtr(void)
   /* USER CODE END SigfoxInfo_GetPtr_1 */
   FEAT_INFO_Param_t  *p_feature;
 
-  p_feature = MBMUXIF_SystemGetFeatCapabInfoPtr(FEAT_INFO_SIGFOX_ID);
+  p_feature = MBMUXIF_SystemGetFeatCapabInfoPtr(FEAT_INFO_OWLEY_ID);
   return (SigfoxInfo_t *) p_feature->Feat_Info_Config_Ptr;
   /* USER CODE BEGIN SigfoxInfo_GetPtr_2 */
 
@@ -590,7 +590,7 @@ void Process_Sigfox_Notif(MBMUX_ComParam_t *ComObj)
   switch (ComObj->MsgId)
   {
     /* callbacks */
-    case SIGFOX_GET_BATTERY_LEVEL_CB_ID:
+    case OWLEY_GET_BATTERY_LEVEL_CB_ID:
       if (callback_wrap->GetBatteryLevel != NULL)
       {
         cb_ret = (uint32_t) callback_wrap->GetBatteryLevel();
@@ -604,7 +604,7 @@ void Process_Sigfox_Notif(MBMUX_ComParam_t *ComObj)
       ComObj->ReturnVal =  cb_ret; /* */
       break;
 
-    case SIGFOX_GET_TEMPERATURE_LEVEL_CB_ID:
+    case OWLEY_GET_TEMPERATURE_LEVEL_CB_ID:
       if (callback_wrap->GetTemperatureLevel != NULL)
       {
         cb_ret = (uint32_t) callback_wrap->GetTemperatureLevel();
@@ -618,7 +618,7 @@ void Process_Sigfox_Notif(MBMUX_ComParam_t *ComObj)
       ComObj->ReturnVal =  cb_ret; /* */
       break;
 
-    case SIGFOX_MONARCH_RC_SCAN_CB_ID:
+    case OWLEY_MONARCH_RC_SCAN_CB_ID:
       if (app_cb != NULL)
       {
         cb_ret = (sfx_u8) app_cb((sfx_u8)ComObj->ParamBuf[0], (sfx_s16) ComObj->ParamBuf[1]);
@@ -638,7 +638,7 @@ void Process_Sigfox_Notif(MBMUX_ComParam_t *ComObj)
 
   /* send Ack */
   APP_LOG(TS_ON, VLEVEL_H,  "CM4 - Sigfox sending ack \n\r");
-  MBMUX_AcknowledgeSnd(FEAT_INFO_SIGFOX_ID);
+  MBMUX_AcknowledgeSnd(FEAT_INFO_OWLEY_ID);
   /* USER CODE BEGIN Process_Sigfox_Notif_2 */
 
   /* USER CODE END Process_Sigfox_Notif_2 */

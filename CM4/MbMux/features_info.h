@@ -52,7 +52,7 @@ typedef enum
   FEAT_INFO_TRACE_ID,  /* = 6 : position should not change between revisions */
   FEAT_INFO_RADIO_ID,  /* = 7 : position should not change between revisions */
   FEAT_INFO_LORAWAN_ID,  /* = 8 : position should not change between revisions */
-  FEAT_INFO_SIGFOX_ID,  /* = 9 : position should not change between revisions */
+  FEAT_INFO_OWLEY_ID,  /* = 9 : position should not change between revisions */
   FEAT_INFO_WMBUS_ID,  /* = 10 : position should not change between revisions */
   /* USER CODE BEGIN FEAT_INFO_IdTypeDef */
 

@@ -410,7 +410,7 @@ ATEerror_t AT_version_get(const char *param)
           (uint8_t)(feature_version >> 8));
 
   /* Get MW Sigfox info */
-  p_cm0plus_specific_features_info = MBMUXIF_SystemGetFeatCapabInfoPtr(FEAT_INFO_SIGFOX_ID);
+  p_cm0plus_specific_features_info = MBMUXIF_SystemGetFeatCapabInfoPtr(FEAT_INFO_OWLEY_ID);
   feature_version = p_cm0plus_specific_features_info->Feat_Info_Feature_Version;
   APP_LOG(TS_OFF, VLEVEL_M, "MW_SIGFOX_VERSION:   V%X.%X.%X\r\n",
           (uint8_t)(feature_version >> 24),

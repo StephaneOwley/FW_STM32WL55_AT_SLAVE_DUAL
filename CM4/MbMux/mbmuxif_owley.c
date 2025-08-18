@@ -104,13 +104,13 @@ int8_t MBMUXIF_SigfoxInit(void)
   }
   if (ret >= 0)
   {
-    ret = MBMUX_RegisterFeature(FEAT_INFO_SIGFOX_ID, MBMUX_CMD_RESP,
+    ret = MBMUX_RegisterFeature(FEAT_INFO_OWLEY_ID, MBMUX_CMD_RESP,
                                 MBMUXIF_IsrSigfoxRespRcvCb,
                                 aSigfoxCmdRespBuff, sizeof(aSigfoxCmdRespBuff));
   }
   if (ret >= 0)
   {
-    ret = MBMUX_RegisterFeature(FEAT_INFO_SIGFOX_ID, MBMUX_NOTIF_ACK,
+    ret = MBMUX_RegisterFeature(FEAT_INFO_OWLEY_ID, MBMUX_NOTIF_ACK,
                                 MBMUXIF_IsrSigfoxNotifRcvCb,
                                 aSigfoxNotifAckBuff, sizeof(aSigfoxNotifAckBuff));
   }
@@ -121,7 +121,7 @@ int8_t MBMUXIF_SigfoxInit(void)
 
   if (ret >= 0)
   {
-    ret = MBMUXIF_SystemSendCm0plusRegistrationCmd(FEAT_INFO_SIGFOX_ID);
+    ret = MBMUXIF_SystemSendCm0plusRegistrationCmd(FEAT_INFO_OWLEY_ID);
     if (ret < 0)
     {
       ret = -3;
@@ -145,7 +145,7 @@ MBMUX_ComParam_t *MBMUXIF_GetSigfoxFeatureCmdComPtr(void)
   /* USER CODE BEGIN MBMUXIF_GetSigfoxFeatureCmdComPtr_1 */
 
   /* USER CODE END MBMUXIF_GetSigfoxFeatureCmdComPtr_1 */
-  MBMUX_ComParam_t *com_param_ptr = MBMUX_GetFeatureComPtr(FEAT_INFO_SIGFOX_ID, MBMUX_CMD_RESP);
+  MBMUX_ComParam_t *com_param_ptr = MBMUX_GetFeatureComPtr(FEAT_INFO_OWLEY_ID, MBMUX_CMD_RESP);
   if (com_param_ptr == NULL)
   {
     Error_Handler(); /* feature isn't registered */
@@ -161,7 +161,7 @@ void MBMUXIF_SigfoxSendCmd(void)
   /* USER CODE BEGIN MBMUXIF_SigfoxSendCmd_1 */
 
   /* USER CODE END MBMUXIF_SigfoxSendCmd_1 */
-  if (MBMUX_CommandSnd(FEAT_INFO_SIGFOX_ID) == 0)
+  if (MBMUX_CommandSnd(FEAT_INFO_OWLEY_ID) == 0)
   {
     UTIL_SEQ_WaitEvt(1 << CFG_SEQ_Evt_MbSigfoxRespRcv);
   }
@@ -179,7 +179,7 @@ void MBMUXIF_SigfoxSendAck(void)
   /* USER CODE BEGIN MBMUXIF_SigfoxSendAck_1 */
 
   /* USER CODE END MBMUXIF_SigfoxSendAck_1 */
-  if (MBMUX_AcknowledgeSnd(FEAT_INFO_SIGFOX_ID) != 0)
+  if (MBMUX_AcknowledgeSnd(FEAT_INFO_OWLEY_ID) != 0)
   {
     Error_Handler();
   }
