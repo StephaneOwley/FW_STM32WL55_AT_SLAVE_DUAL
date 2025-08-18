@@ -96,8 +96,8 @@ typedef struct
 #define MAX_PARAM_OF_TRACE_NOTIF_FUNCTIONS      11 /*!< Max number of parameters that the trace can use */
 #define MAX_PARAM_OF_RADIO_CMD_FUNCTIONS        15 /*!< Max number of parameters that the radio_cmd can use */
 #define MAX_PARAM_OF_RADIO_NOTIF_FUNCTIONS       4 /*!< Max number of parameters that the radio_notif can use */
-#define MAX_PARAM_OF_SIGFOX_CMD_FUNCTIONS       15 /*!< Max number of parameters that the sigfox_cmd can use */
-#define MAX_PARAM_OF_SIGFOX_NOTIF_FUNCTIONS      5 /*!< Max number of parameters that the sigfox_notif can use */
+#define MAX_PARAM_OF_OWLEY_CMD_FUNCTIONS       15 /*!< Max number of parameters that the sigfox_cmd can use */
+#define MAX_PARAM_OF_OWLEY_NOTIF_FUNCTIONS      5 /*!< Max number of parameters that the sigfox_notif can use */
 
 /* USER CODE BEGIN EC */
 

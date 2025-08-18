@@ -291,7 +291,7 @@ static void MBMUXIF_Init(void)
   }
   APP_LOG(TS_ON, VLEVEL_H, "Radio registration CM4-CM0PLUS completed \r\n");
 
-  init_status = MBMUXIF_SigfoxInit();
+  init_status = MBMUXIF_OwleyInit();
   if (init_status < 0)
   {
     Error_Handler();

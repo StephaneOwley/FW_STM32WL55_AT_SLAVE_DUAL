@@ -81,7 +81,7 @@ typedef enum
 
   /* USER CODE END CFG_SEQ_Task_Id_t_0 */
   CFG_SEQ_Task_MbSystemNotifRcv,
-  CFG_SEQ_Task_MbSigfoxNotifRcv,
+  CFG_SEQ_Task_MbOwleyNotifRcv,
   CFG_SEQ_Task_MbRadioNotifRcv,
   CFG_SEQ_Evt_Monarch,
   CFG_SEQ_Task_Vcom,

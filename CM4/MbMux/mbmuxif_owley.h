@@ -61,22 +61,22 @@ extern "C" {
              -3: callback error on CM0PLUS
              -4: mismatch between CM4 and CM0PLUS sigfox versions
   */
-int8_t MBMUXIF_SigfoxInit(void);
+int8_t MBMUXIF_OwleyInit(void);
 /**
   * @brief   gives back the pointer to the com buffer associated to Sigfox feature Cmd
   * @return  pointer to the com param buffer
   */
-MBMUX_ComParam_t *MBMUXIF_GetSigfoxFeatureCmdComPtr(void);
+MBMUX_ComParam_t *MBMUXIF_GetOwleyFeatureCmdComPtr(void);
 
 /**
   * @brief   Sends a Sigfox-Cmd via Ipcc and Wait for the response
   */
-void MBMUXIF_SigfoxSendCmd(void);
+void MBMUXIF_OwleySendCmd(void);
 
 /**
   * @brief   Sends a Sigfox-Ack  via Ipcc without waiting for the ack
   */
-void MBMUXIF_SigfoxSendAck(void);
+void MBMUXIF_OwleySendAck(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
