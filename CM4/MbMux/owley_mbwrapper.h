@@ -29,6 +29,8 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "mbmux_table.h"
+#include "sigfox_types.h"
+#include "sigfox_api.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -88,6 +90,9 @@ void Process_Sigfox_Notif(MBMUX_ComParam_t *ComObj);
   * @param SigfoxCallback struct of callbacks
   */
 void Sigfox_Register(SigfoxCallback_t *SigfoxCallback);
+
+//
+sfx_error_t OWLEY_API_open(sfx_rc_t *rc);
 
 /* USER CODE BEGIN EFP */
 

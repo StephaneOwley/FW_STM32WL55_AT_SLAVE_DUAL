@@ -76,7 +76,7 @@ static SigfoxCallback_t SigfoxCallbacks = { SYS_GetBatteryLevel,
 
 /* Private function prototypes -----------------------------------------------*/
 /**
-  * @brief  It calls SIGFOX_API_open()
+  * @brief  It calls OWLEY_API_open()
   * @param  Config
   * @retval Status
   */
@@ -205,7 +205,7 @@ static sfx_error_t st_sigfox_open(sfx_rc_enum_t sfx_rc)
     case SFX_RC1:
     {
       sfx_rc_t SgfxRc = RC1;
-      error = SIGFOX_API_open(&SgfxRc);
+      error = OWLEY_API_open(&SgfxRc);
 
       break;
     }
@@ -213,7 +213,7 @@ static sfx_error_t st_sigfox_open(sfx_rc_enum_t sfx_rc)
     {
       sfx_rc_t SgfxRc = RC2;
 
-      error = SIGFOX_API_open(&SgfxRc);
+      error = OWLEY_API_open(&SgfxRc);
 
       if (error == SFX_ERR_NONE)
       {
@@ -226,7 +226,7 @@ static sfx_error_t st_sigfox_open(sfx_rc_enum_t sfx_rc)
     {
       sfx_rc_t SgfxRc = RC3A;
 
-      error = SIGFOX_API_open(&SgfxRc);
+      error = OWLEY_API_open(&SgfxRc);
 
       if (error == SFX_ERR_NONE)
       {
@@ -238,7 +238,7 @@ static sfx_error_t st_sigfox_open(sfx_rc_enum_t sfx_rc)
     {
       sfx_rc_t SgfxRc = RC3C;
 
-      error = SIGFOX_API_open(&SgfxRc);
+      error = OWLEY_API_open(&SgfxRc);
 
       if (error == SFX_ERR_NONE)
       {
@@ -250,7 +250,7 @@ static sfx_error_t st_sigfox_open(sfx_rc_enum_t sfx_rc)
     {
       sfx_rc_t SgfxRc = RC4;
 
-      error = SIGFOX_API_open(&SgfxRc);
+      error = OWLEY_API_open(&SgfxRc);
 
       if (error == SFX_ERR_NONE)
       {
@@ -262,7 +262,7 @@ static sfx_error_t st_sigfox_open(sfx_rc_enum_t sfx_rc)
     {
       sfx_rc_t SgfxRc = RC5;
 
-      error = SIGFOX_API_open(&SgfxRc);
+      error = OWLEY_API_open(&SgfxRc);
 
       if (error == SFX_ERR_NONE)
       {
@@ -273,13 +273,13 @@ static sfx_error_t st_sigfox_open(sfx_rc_enum_t sfx_rc)
     case SFX_RC6:
     {
       sfx_rc_t SgfxRc = RC6;
-      error = SIGFOX_API_open(&SgfxRc);
+      error = OWLEY_API_open(&SgfxRc);
       break;
     }
     case SFX_RC7:
     {
       sfx_rc_t SgfxRc = RC7;
-      error = SIGFOX_API_open(&SgfxRc);
+      error = OWLEY_API_open(&SgfxRc);
       break;
     }
     /* USER CODE BEGIN st_sigfox_open_case */

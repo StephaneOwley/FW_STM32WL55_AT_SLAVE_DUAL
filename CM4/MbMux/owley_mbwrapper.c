@@ -90,11 +90,11 @@ static SigfoxCallback_t *callback_wrap;
 /* USER CODE END PFP */
 
 /* Exported functions --------------------------------------------------------*/
-sfx_error_t SIGFOX_API_open(sfx_rc_t *rc)
+sfx_error_t OWLEY_API_open(sfx_rc_t *rc)
 {
-  /* USER CODE BEGIN SIGFOX_API_open_1 */
+  /* USER CODE BEGIN OWLEY_API_open_1 */
 
-  /* USER CODE END SIGFOX_API_open_1 */
+  /* USER CODE END OWLEY_API_open_1 */
   MBMUX_ComParam_t *com_obj;
   uint32_t *com_buffer;
   uint16_t i = 0;
@@ -122,9 +122,9 @@ sfx_error_t SIGFOX_API_open(sfx_rc_t *rc)
 
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
-  /* USER CODE BEGIN SIGFOX_API_open_2 */
+  /* USER CODE BEGIN OWLEY_API_open_2 */
 
-  /* USER CODE END SIGFOX_API_open_2 */
+  /* USER CODE END OWLEY_API_open_2 */
 }
 
 sfx_error_t SIGFOX_API_close(void)

@@ -35,6 +35,7 @@
 #include "stm32_seq.h"
 #include "utilities_def.h"
 #include "mbmuxif_sys.h"
+#include "owley_mbwrapper.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -933,7 +934,7 @@ ATEerror_t AT_ChannelConfigFcc_set(const char *param)
     {
       return AT_ERROR;
     }
-    if ((SIGFOX_API_open(&rc)) != SFX_ERR_NONE)
+    if ((OWLEY_API_open(&rc)) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -951,7 +952,7 @@ ATEerror_t AT_ChannelConfigFcc_set(const char *param)
     {
       return AT_ERROR;
     }
-    if ((SIGFOX_API_open(&rc)) != SFX_ERR_NONE)
+    if ((OWLEY_API_open(&rc)) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -1044,7 +1045,7 @@ ATEerror_t AT_rc_set(const char *param)
     {
       return AT_ERROR;
     }
-    if ((SIGFOX_API_open(&SgfxRc)) != SFX_ERR_NONE)
+    if ((OWLEY_API_open(&SgfxRc)) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -1064,7 +1065,7 @@ ATEerror_t AT_rc_set(const char *param)
     {
       return AT_ERROR;
     }
-    if ((SIGFOX_API_open(&SgfxRc)) != SFX_ERR_NONE)
+    if ((OWLEY_API_open(&SgfxRc)) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -1092,7 +1093,7 @@ ATEerror_t AT_rc_set(const char *param)
       {
         return AT_ERROR;
       }
-      if ((SIGFOX_API_open(&SgfxRc)) != SFX_ERR_NONE)
+      if ((OWLEY_API_open(&SgfxRc)) != SFX_ERR_NONE)
       {
         return AT_ERROR;
       }
@@ -1118,7 +1119,7 @@ ATEerror_t AT_rc_set(const char *param)
       {
         return AT_ERROR;
       }
-      if ((SIGFOX_API_open(&SgfxRc)) != SFX_ERR_NONE)
+      if ((OWLEY_API_open(&SgfxRc)) != SFX_ERR_NONE)
       {
         return AT_ERROR;
       }
@@ -1148,7 +1149,7 @@ ATEerror_t AT_rc_set(const char *param)
     {
       return AT_ERROR;
     }
-    if ((SIGFOX_API_open(&SgfxRc)) != SFX_ERR_NONE)
+    if ((OWLEY_API_open(&SgfxRc)) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -1174,7 +1175,7 @@ ATEerror_t AT_rc_set(const char *param)
     {
       return AT_ERROR;
     }
-    if ((SIGFOX_API_open(&SgfxRc)) != SFX_ERR_NONE)
+    if ((OWLEY_API_open(&SgfxRc)) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -1195,7 +1196,7 @@ ATEerror_t AT_rc_set(const char *param)
     {
       return AT_ERROR;
     }
-    if ((SIGFOX_API_open(&SgfxRc
+    if ((OWLEY_API_open(&SgfxRc
                         )) != SFX_ERR_NONE)
     {
       return AT_ERROR;
@@ -1213,7 +1214,7 @@ ATEerror_t AT_rc_set(const char *param)
     {
       return AT_ERROR;
     }
-    if ((SIGFOX_API_open(&SgfxRc
+    if ((OWLEY_API_open(&SgfxRc
                         )) != SFX_ERR_NONE)
     {
       return AT_ERROR;
@@ -1500,14 +1501,14 @@ static sfx_error_t SIGFOX_reopen_and_reconf(sfx_rc_enum_t sfx_rc,  sfx_u32 *conf
     case SFX_RC1:
     {
       sfx_rc_t SgfxRc = RC1;
-      error = SIGFOX_API_open(&SgfxRc);
+      error = OWLEY_API_open(&SgfxRc);
       break;
     }
     case SFX_RC2:
     {
       sfx_rc_t SgfxRc = RC2;
 
-      error = SIGFOX_API_open(&SgfxRc);
+      error = OWLEY_API_open(&SgfxRc);
 
       if (error == SFX_ERR_NONE)
       {
@@ -1520,7 +1521,7 @@ static sfx_error_t SIGFOX_reopen_and_reconf(sfx_rc_enum_t sfx_rc,  sfx_u32 *conf
     {
       sfx_rc_t SgfxRc = RC3A;
 
-      error = SIGFOX_API_open(&SgfxRc);
+      error = OWLEY_API_open(&SgfxRc);
 
       if (error == SFX_ERR_NONE)
       {
@@ -1533,7 +1534,7 @@ static sfx_error_t SIGFOX_reopen_and_reconf(sfx_rc_enum_t sfx_rc,  sfx_u32 *conf
     {
       sfx_rc_t SgfxRc = RC3C;
 
-      error = SIGFOX_API_open(&SgfxRc);
+      error = OWLEY_API_open(&SgfxRc);
 
       if (error == SFX_ERR_NONE)
       {
@@ -1546,7 +1547,7 @@ static sfx_error_t SIGFOX_reopen_and_reconf(sfx_rc_enum_t sfx_rc,  sfx_u32 *conf
     {
       sfx_rc_t SgfxRc = RC4;
 
-      error = SIGFOX_API_open(&SgfxRc);
+      error = OWLEY_API_open(&SgfxRc);
 
       if (error == SFX_ERR_NONE)
       {
@@ -1559,7 +1560,7 @@ static sfx_error_t SIGFOX_reopen_and_reconf(sfx_rc_enum_t sfx_rc,  sfx_u32 *conf
     {
       sfx_rc_t SgfxRc = RC5;
 
-      error = SIGFOX_API_open(&SgfxRc);
+      error = OWLEY_API_open(&SgfxRc);
 
       if (error == SFX_ERR_NONE)
       {
@@ -1572,7 +1573,7 @@ static sfx_error_t SIGFOX_reopen_and_reconf(sfx_rc_enum_t sfx_rc,  sfx_u32 *conf
     {
       sfx_rc_t SgfxRc = RC6;
 
-      error = SIGFOX_API_open(&SgfxRc);
+      error = OWLEY_API_open(&SgfxRc);
 
       break;
     }
@@ -1580,7 +1581,7 @@ static sfx_error_t SIGFOX_reopen_and_reconf(sfx_rc_enum_t sfx_rc,  sfx_u32 *conf
     {
       sfx_rc_t SgfxRc = RC7;
 
-      error = SIGFOX_API_open(&SgfxRc);
+      error = OWLEY_API_open(&SgfxRc);
 
       break;
     }
