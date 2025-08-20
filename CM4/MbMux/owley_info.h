@@ -1,9 +1,9 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    sigfox_info.h
-  * @author  MCD Application Team
-  * @brief   To give info to the application about Sigfox configuration
+  * @file    owley_info.h
+  * @author  Owley Team
+  * @brief   To give info to the application about Owley configuration
   ******************************************************************************
   * @attention
   *
@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 
-#ifndef __SIGFOX_INFO_H__
-#define __SIGFOX_INFO_H__
+#ifndef __OWLEY_INFO_H__
+#define __OWLEY_INFO_H__
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -32,14 +32,14 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /*!
- * To give info to the application about Sigfox capability
+ * To give info to the application about Owley capability
  * it can depend how it has been compiled (e.g. compiled regions ...)
  * Params should be better uint32_t foe easier alignment with info_table concept
  */
 typedef struct
 {
   uint32_t Region;   /*!< Combination of regions  */
-} SigfoxInfo_t;
+} OwleyInfo_t;
 
 /* USER CODE BEGIN ET */
 
@@ -62,15 +62,15 @@ typedef struct
 
 /* Exported functions prototypes ---------------------------------------------*/
 /**
-  * @brief initialize the SigfoxInfo capabilities table
+  * @brief initialize the OwleyInfo capabilities table
   */
 void OwleyInfo_Init(void);
 
 /**
   * @brief returns the pointer to the SigfoxInfo capabilities table
-  * @return  SigfoxInfo_t pointer
+  * @return  OwleyInfo_t pointer
   */
-SigfoxInfo_t *OwleyInfo_GetPtr(void);
+OwleyInfo_t *OwleyInfo_GetPtr(void);
 
 /* USER CODE BEGIN EFP */
 

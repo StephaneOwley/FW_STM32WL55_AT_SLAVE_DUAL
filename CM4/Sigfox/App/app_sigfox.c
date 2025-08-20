@@ -59,7 +59,7 @@
 /* USER CODE END PFP */
 
 /* Exported functions --------------------------------------------------------*/
-void MX_Sigfox_Init(void)
+void MX_Owley_Init(void)
 {
   /* USER CODE BEGIN MX_Sigfox_Init_1 */
 
@@ -68,13 +68,13 @@ void MX_Sigfox_Init(void)
   /* USER CODE BEGIN MX_Sigfox_Init_1_1 */
 
   /* USER CODE END MX_Sigfox_Init_1_1 */
-  Sigfox_Init();
+  Owley_Init();
   /* USER CODE BEGIN MX_Sigfox_Init_2 */
 
   /* USER CODE END MX_Sigfox_Init_2 */
 }
 
-void MX_Sigfox_Process(void)
+void MX_Owley_Process(void)
 {
   /* USER CODE BEGIN MX_Sigfox_Process_1 */
 

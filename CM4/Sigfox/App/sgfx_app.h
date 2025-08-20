@@ -58,7 +58,7 @@ extern "C" {
 /**
   * @brief  Init Sigfox Application
   */
-void Sigfox_Init(void);
+void Owley_Init(void);
 
 /* USER CODE BEGIN EFP */
 

@@ -85,7 +85,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_Sigfox_Init();
+  MX_Owley_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -95,7 +95,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    MX_Sigfox_Process();
+    MX_Owley_Process();
 
     /* USER CODE BEGIN 3 */
   }

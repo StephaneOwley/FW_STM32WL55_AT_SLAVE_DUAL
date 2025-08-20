@@ -56,12 +56,12 @@ extern "C" {
 /**
   * @brief  Init Sigfox Application
   */
-void MX_Sigfox_Init(void);
+void MX_Owley_Init(void);
 
 /**
   * @brief  entry Sigfox Process or scheduling
   */
-void MX_Sigfox_Process(void);
+void MX_Owley_Process(void);
 
 /* USER CODE BEGIN EFP */
 

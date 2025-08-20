@@ -69,7 +69,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /**
-  * @brief Sigfox buffer to exchange data between from CM4 to CM0+
+  * @brief Owley buffer to exchange data between from CM4 to CM0+
   */
 UTIL_MEM_PLACE_IN_SECTION("MB_MEM1") uint8_t aOwleyMbWrapShareBuffer[OWLEY_MBWRAP_SHBUF_SIZE];
 
@@ -126,9 +126,9 @@ sfx_error_t OWLEY_API_open(sfx_rc_t *rc)
 
 sfx_error_t OWLEY_API_close(void)
 {
-  /* USER CODE BEGIN SIGFOX_API_close_1 */
+  /* USER CODE BEGIN OWLEY_API_close_1 */
 
-  /* USER CODE END SIGFOX_API_close_1 */
+  /* USER CODE END OWLEY_API_close_1 */
   MBMUX_ComParam_t *com_obj;
   uint32_t ret;
 
@@ -140,18 +140,18 @@ sfx_error_t OWLEY_API_close(void)
   /* once event is received and semaphore released: */
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
-  /* USER CODE BEGIN SIGFOX_API_close_2 */
+  /* USER CODE BEGIN OWLEY_API_close_2 */
 
-  /* USER CODE END SIGFOX_API_close_2 */
+  /* USER CODE END OWLEY_API_close_2 */
 }
 
 sfx_error_t OWLEY_API_send_frame(sfx_u8 *customer_data, sfx_u8 customer_data_length,
                                   sfx_u8 *customer_response, sfx_u8 tx_mode,
                                   sfx_bool initiate_downlink_flag)
 {
-  /* USER CODE BEGIN SIGFOX_API_send_frame_1 */
+  /* USER CODE BEGIN OWLEY_API_send_frame_1 */
 
-  /* USER CODE END SIGFOX_API_send_frame_1 */
+  /* USER CODE END OWLEY_API_send_frame_1 */
   MBMUX_ComParam_t *com_obj;
   uint32_t *com_buffer;
   uint16_t i = 0;
@@ -195,9 +195,9 @@ sfx_error_t OWLEY_API_send_frame(sfx_u8 *customer_data, sfx_u8 customer_data_len
 
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
-  /* USER CODE BEGIN SIGFOX_API_send_frame_2 */
+  /* USER CODE BEGIN OWLEY_API_send_frame_2 */
 
-  /* USER CODE END SIGFOX_API_send_frame_2 */
+  /* USER CODE END OWLEY_API_send_frame_2 */
 }
 
 sfx_error_t OWLEY_API_send_bit(sfx_bool bit_value,
@@ -205,9 +205,9 @@ sfx_error_t OWLEY_API_send_bit(sfx_bool bit_value,
                                 sfx_u8 tx_mode,
                                 sfx_bool initiate_downlink_flag)
 {
-  /* USER CODE BEGIN SIGFOX_API_send_bit_1 */
+  /* USER CODE BEGIN OWLEY_API_send_bit_1 */
 
-  /* USER CODE END SIGFOX_API_send_bit_1 */
+  /* USER CODE END OWLEY_API_send_bit_1 */
   MBMUX_ComParam_t *com_obj;
   uint32_t *com_buffer;
   uint16_t i = 0;
@@ -241,16 +241,16 @@ sfx_error_t OWLEY_API_send_bit(sfx_bool bit_value,
 
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
-  /* USER CODE BEGIN SIGFOX_API_send_bit_2 */
+  /* USER CODE BEGIN OWLEY_API_send_bit_2 */
 
-  /* USER CODE END SIGFOX_API_send_bit_2 */
+  /* USER CODE END OWLEY_API_send_bit_2 */
 }
 
 sfx_error_t OWLEY_API_send_outofband(sfx_oob_enum_t oob_type)
 {
-  /* USER CODE BEGIN SIGFOX_API_send_outofband_1 */
+  /* USER CODE BEGIN OWLEY_API_send_outofband_1 */
 
-  /* USER CODE END SIGFOX_API_send_outofband_1 */
+  /* USER CODE END OWLEY_API_send_outofband_1 */
   MBMUX_ComParam_t *com_obj;
   uint32_t *com_buffer;
   uint16_t i = 0;
@@ -267,17 +267,17 @@ sfx_error_t OWLEY_API_send_outofband(sfx_oob_enum_t oob_type)
 
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
-  /* USER CODE BEGIN SIGFOX_API_send_outofband_2 */
+  /* USER CODE BEGIN OWLEY_API_send_outofband_2 */
 
-  /* USER CODE END SIGFOX_API_send_outofband_2 */
+  /* USER CODE END OWLEY_API_send_outofband_2 */
 }
 
 sfx_error_t OWLEY_API_set_std_config(sfx_u32 config_words[NB_ELEMENTS_MAX],
                                       sfx_bool timer_enable)
 {
-  /* USER CODE BEGIN SIGFOX_API_set_std_config_1 */
+  /* USER CODE BEGIN OWLEY_API_set_std_config_1 */
 
-  /* USER CODE END SIGFOX_API_set_std_config_1 */
+  /* USER CODE END OWLEY_API_set_std_config_1 */
   MBMUX_ComParam_t *com_obj;
   uint32_t *com_buffer;
   uint16_t i = 0;
@@ -302,16 +302,16 @@ sfx_error_t OWLEY_API_set_std_config(sfx_u32 config_words[NB_ELEMENTS_MAX],
 
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
-  /* USER CODE BEGIN SIGFOX_API_set_std_config_2 */
+  /* USER CODE BEGIN OWLEY_API_set_std_config_2 */
 
-  /* USER CODE END SIGFOX_API_set_std_config_2 */
+  /* USER CODE END OWLEY_API_set_std_config_2 */
 }
 
 sfx_error_t OWLEY_API_start_continuous_transmission(sfx_u32 frequency, sfx_modulation_type_t type)
 {
-  /* USER CODE BEGIN SIGFOX_API_start_continuous_transmission_1 */
+  /* USER CODE BEGIN OWLEY_API_start_continuous_transmission_1 */
 
-  /* USER CODE END SIGFOX_API_start_continuous_transmission_1 */
+  /* USER CODE END OWLEY_API_start_continuous_transmission_1 */
   MBMUX_ComParam_t *com_obj;
   uint32_t *com_buffer;
   uint16_t i = 0;
@@ -336,16 +336,16 @@ sfx_error_t OWLEY_API_start_continuous_transmission(sfx_u32 frequency, sfx_modul
 
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
-  /* USER CODE BEGIN SIGFOX_API_start_continuous_transmission_2 */
+  /* USER CODE BEGIN OWLEY_API_start_continuous_transmission_2 */
 
-  /* USER CODE END SIGFOX_API_start_continuous_transmission_2 */
+  /* USER CODE END OWLEY_API_start_continuous_transmission_2 */
 }
 
 sfx_error_t OWLEY_API_stop_continuous_transmission(void)
 {
-  /* USER CODE BEGIN SIGFOX_API_stop_continuous_transmission_1 */
+  /* USER CODE BEGIN OWLEY_API_stop_continuous_transmission_1 */
 
-  /* USER CODE END SIGFOX_API_stop_continuous_transmission_1 */
+  /* USER CODE END OWLEY_API_stop_continuous_transmission_1 */
   MBMUX_ComParam_t *com_obj;
   uint32_t ret;
 
@@ -357,16 +357,16 @@ sfx_error_t OWLEY_API_stop_continuous_transmission(void)
   /* once event is received and semaphore released: */
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
-  /* USER CODE BEGIN SIGFOX_API_stop_continuous_transmission_2 */
+  /* USER CODE BEGIN OWLEY_API_stop_continuous_transmission_2 */
 
-  /* USER CODE END SIGFOX_API_stop_continuous_transmission_2 */
+  /* USER CODE END OWLEY_API_stop_continuous_transmission_2 */
 }
 
 sfx_error_t OWLEY_API_get_version(sfx_u8 **version, sfx_u8 *size, sfx_version_type_t type)
 {
-  /* USER CODE BEGIN SIGFOX_API_get_version_1 */
+  /* USER CODE BEGIN OWLEY_API_get_version_1 */
 
-  /* USER CODE END SIGFOX_API_get_version_1 */
+  /* USER CODE END OWLEY_API_get_version_1 */
   MBMUX_ComParam_t *com_obj;
   uint32_t *com_buffer;
   uint16_t i = 0;
@@ -398,16 +398,16 @@ sfx_error_t OWLEY_API_get_version(sfx_u8 **version, sfx_u8 *size, sfx_version_ty
 
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
-  /* USER CODE BEGIN SIGFOX_API_get_version_2 */
+  /* USER CODE BEGIN OWLEY_API_get_version_2 */
 
-  /* USER CODE END SIGFOX_API_get_version_2 */
+  /* USER CODE END OWLEY_API_get_version_2 */
 }
 
 sfx_error_t OWLEY_API_get_device_id(sfx_u8 *dev_id)
 {
-  /* USER CODE BEGIN SIGFOX_API_get_device_id_1 */
+  /* USER CODE BEGIN OWLEY_API_get_device_id_1 */
 
-  /* USER CODE END SIGFOX_API_get_device_id_1 */
+  /* USER CODE END OWLEY_API_get_device_id_1 */
   MBMUX_ComParam_t *com_obj;
   uint32_t *com_buffer;
   uint16_t i = 0;
@@ -435,16 +435,16 @@ sfx_error_t OWLEY_API_get_device_id(sfx_u8 *dev_id)
 
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
-  /* USER CODE BEGIN SIGFOX_API_get_device_id_2 */
+  /* USER CODE BEGIN OWLEY_API_get_device_id_2 */
 
-  /* USER CODE END SIGFOX_API_get_device_id_2 */
+  /* USER CODE END OWLEY_API_get_device_id_2 */
 }
 
 sfx_error_t OWLEY_API_get_initial_pac(sfx_u8 *initial_pac)
 {
-  /* USER CODE BEGIN SIGFOX_API_get_initial_pac_1 */
+  /* USER CODE BEGIN OWLEY_API_get_initial_pac_1 */
 
-  /* USER CODE END SIGFOX_API_get_initial_pac_1 */
+  /* USER CODE END OWLEY_API_get_initial_pac_1 */
   MBMUX_ComParam_t *com_obj;
   uint32_t *com_buffer;
   uint16_t i = 0;
@@ -472,16 +472,16 @@ sfx_error_t OWLEY_API_get_initial_pac(sfx_u8 *initial_pac)
 
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
-  /* USER CODE BEGIN SIGFOX_API_get_initial_pac_2 */
+  /* USER CODE BEGIN OWLEY_API_get_initial_pac_2 */
 
-  /* USER CODE END SIGFOX_API_get_initial_pac_2 */
+  /* USER CODE END OWLEY_API_get_initial_pac_2 */
 }
 
 sfx_error_t OWLEY_API_set_rc_sync_period(sfx_u16 rc_sync_period)
 {
-  /* USER CODE BEGIN SIGFOX_API_set_rc_sync_period_1 */
+  /* USER CODE BEGIN OWLEY_API_set_rc_sync_period_1 */
 
-  /* USER CODE END SIGFOX_API_set_rc_sync_period_1 */
+  /* USER CODE END OWLEY_API_set_rc_sync_period_1 */
   MBMUX_ComParam_t *com_obj;
   uint32_t *com_buffer;
   uint16_t i = 0;
@@ -498,9 +498,9 @@ sfx_error_t OWLEY_API_set_rc_sync_period(sfx_u16 rc_sync_period)
 
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
-  /* USER CODE BEGIN SIGFOX_API_set_rc_sync_period_2 */
+  /* USER CODE BEGIN OWLEY_API_set_rc_sync_period_2 */
 
-  /* USER CODE END SIGFOX_API_set_rc_sync_period_2 */
+  /* USER CODE END OWLEY_API_set_rc_sync_period_2 */
 }
 
 sfx_error_t ADDON_SIGFOX_RF_PROTOCOL_API_test_mode(sfx_rc_enum_t rc_enum, sfx_test_mode_t test_mode)
@@ -532,9 +532,9 @@ sfx_error_t ADDON_SIGFOX_RF_PROTOCOL_API_test_mode(sfx_rc_enum_t rc_enum, sfx_te
 
 void OwleyInfo_Init(void)
 {
-  /* USER CODE BEGIN SigfoxInfo_Init_1 */
+  /* USER CODE BEGIN OwleyInfo_Init_1 */
 
-  /* USER CODE END SigfoxInfo_Init_1 */
+  /* USER CODE END OwleyInfo_Init_1 */
   MBMUX_ComParam_t *com_obj;
 
   com_obj = MBMUXIF_GetOwleyFeatureCmdComPtr();
@@ -544,44 +544,44 @@ void OwleyInfo_Init(void)
   /* waiting for event */
   /* once event is received and semaphore released: */
   return;
-  /* USER CODE BEGIN SigfoxInfo_Init_2 */
+  /* USER CODE BEGIN OwleyInfo_Init_2 */
 
-  /* USER CODE END SigfoxInfo_Init_2 */
+  /* USER CODE END OwleyInfo_Init_2 */
 }
 
-SigfoxInfo_t *OwleyInfo_GetPtr(void)
+OwleyInfo_t *OwleyInfo_GetPtr(void)
 {
-  /* USER CODE BEGIN SigfoxInfo_GetPtr_1 */
+  /* USER CODE BEGIN OwleyInfo_GetPtr_1 */
 
-  /* USER CODE END SigfoxInfo_GetPtr_1 */
+  /* USER CODE END OwleyInfo_GetPtr_1 */
   FEAT_INFO_Param_t  *p_feature;
 
   p_feature = MBMUXIF_SystemGetFeatCapabInfoPtr(FEAT_INFO_OWLEY_ID);
-  return (SigfoxInfo_t *) p_feature->Feat_Info_Config_Ptr;
-  /* USER CODE BEGIN SigfoxInfo_GetPtr_2 */
+  return (OwleyInfo_t *) p_feature->Feat_Info_Config_Ptr;
+  /* USER CODE BEGIN OwleyInfo_GetPtr_2 */
 
-  /* USER CODE END SigfoxInfo_GetPtr_2 */
+  /* USER CODE END OwleyInfo_GetPtr_2 */
 }
 
 void Owley_Register(OwleyCallback_t *OwleyCallback)
 {
-  /* USER CODE BEGIN Sigfox_Register_1 */
+  /* USER CODE BEGIN Owley_Register_1 */
 
-  /* USER CODE END Sigfox_Register_1 */
+  /* USER CODE END Owley_Register_1 */
   callback_wrap = OwleyCallback;
-  /* USER CODE BEGIN Sigfox_Register_2 */
+  /* USER CODE BEGIN Owley_Register_2 */
 
-  /* USER CODE END Sigfox_Register_2 */
+  /* USER CODE END Owley_Register_2 */
 }
 
 void Process_Owley_Notif(MBMUX_ComParam_t *ComObj)
 {
-  /* USER CODE BEGIN Process_Sigfox_Notif_1 */
+  /* USER CODE BEGIN Process_Owley_Notif_1 */
 
-  /* USER CODE END Process_Sigfox_Notif_1 */
+  /* USER CODE END Process_Owley_Notif_1 */
   uint32_t    cb_ret;
 
-  APP_LOG(TS_ON, VLEVEL_H, "CM4 - Sigfox Notif received \n\r");
+  APP_LOG(TS_ON, VLEVEL_H, "CM4 - Owley Notif received \n\r");
 
   /* process Command */
   switch (ComObj->MsgId)
@@ -634,11 +634,11 @@ void Process_Owley_Notif(MBMUX_ComParam_t *ComObj)
   }
 
   /* send Ack */
-  APP_LOG(TS_ON, VLEVEL_H,  "CM4 - Sigfox sending ack \n\r");
+  APP_LOG(TS_ON, VLEVEL_H,  "CM4 - Owley sending ack \n\r");
   MBMUX_AcknowledgeSnd(FEAT_INFO_OWLEY_ID);
-  /* USER CODE BEGIN Process_Sigfox_Notif_2 */
+  /* USER CODE BEGIN Process_Owley_Notif_2 */
 
-  /* USER CODE END Process_Sigfox_Notif_2 */
+  /* USER CODE END Process_Owley_Notif_2 */
 }
 
 /* Private Functions Definition -----------------------------------------------*/

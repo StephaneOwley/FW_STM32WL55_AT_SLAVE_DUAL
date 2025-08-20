@@ -80,7 +80,7 @@ static OwleyCallback_t OwleyCallbacks = { SYS_GetBatteryLevel,
   * @param  Config
   * @retval Status
   */
-static sfx_error_t st_sigfox_open(sfx_rc_enum_t sfx_rc);
+static sfx_error_t st_owley_open(sfx_rc_enum_t sfx_rc);
 
 /**
   * @brief  It schedules the Virtual Com task
@@ -95,12 +95,12 @@ static void CmdProcessNotify(void);
 
 /* Exported functions --------------------------------------------------------*/
 
-void Sigfox_Init(void)
+void Owley_Init(void)
 {
   E2P_RestoreFs(); // erreur dans le code ST
   sfx_rc_enum_t sfx_rc = SFX_RC1;
   sfx_error_t error = 0;
-  SigfoxInfo_t *SigfoxRegionInfo;
+  OwleyInfo_t *SigfoxRegionInfo;
 
   /* USER CODE BEGIN Sigfox_Init_0 */
   FEAT_INFO_Param_t *p_cm0plus_specific_features_info;
@@ -127,7 +127,7 @@ void Sigfox_Init(void)
   /* Get MW Sigfox info */
   p_cm0plus_specific_features_info = MBMUXIF_SystemGetFeatCapabInfoPtr(FEAT_INFO_OWLEY_ID);
   feature_version = p_cm0plus_specific_features_info->Feat_Info_Feature_Version;
-  APP_LOG(TS_OFF, VLEVEL_M, "MW_SIGFOX_VERSION:   V%X.%X.%X\r\n",
+  APP_LOG(TS_OFF, VLEVEL_M, "MW_OWLEY_VERSION:   V%X.%X.%X\r\n",
           (uint8_t)(feature_version >> 24),
           (uint8_t)(feature_version >> 16),
           (uint8_t)(feature_version >> 8));
@@ -147,9 +147,9 @@ void Sigfox_Init(void)
   sfx_rc = E2P_Read_Rc();
 
   /*Open Sigfox library */
-  error = st_sigfox_open(sfx_rc);
+  error = st_owley_open(sfx_rc);
 
-  /* Init SigfoxInfo capabilities table (redundant: Cm0 is supposed to have done it already) */
+  /* Init OwleyInfo capabilities table (redundant: Cm0 is supposed to have done it already) */
   OwleyInfo_Init();
 
   SigfoxRegionInfo = OwleyInfo_GetPtr();
@@ -188,11 +188,11 @@ void Sigfox_Init(void)
 /* USER CODE END EF */
 
 /* Private Functions Definition -----------------------------------------------*/
-static sfx_error_t st_sigfox_open(sfx_rc_enum_t sfx_rc)
+static sfx_error_t st_owley_open(sfx_rc_enum_t sfx_rc)
 {
-  /* USER CODE BEGIN st_sigfox_open_1 */
+  /* USER CODE BEGIN st_owley_open_1 */
 
-  /* USER CODE END st_sigfox_open_1 */
+  /* USER CODE END st_owley_open_1 */
   sfx_u32 config_words[3] = {0};
 
   E2P_Read_ConfigWords(sfx_rc, config_words);
@@ -282,9 +282,9 @@ static sfx_error_t st_sigfox_open(sfx_rc_enum_t sfx_rc)
       error = OWLEY_API_open(&SgfxRc);
       break;
     }
-    /* USER CODE BEGIN st_sigfox_open_case */
+    /* USER CODE BEGIN st_owley_open_case */
 
-    /* USER CODE END st_sigfox_open_case */
+    /* USER CODE END st_owley_open_case */
     default:
     {
       error = SFX_ERR_API_OPEN;
@@ -293,9 +293,9 @@ static sfx_error_t st_sigfox_open(sfx_rc_enum_t sfx_rc)
   }
 
   return error;
-  /* USER CODE BEGIN st_sigfox_open_2 */
+  /* USER CODE BEGIN st_owley_open_2 */
 
-  /* USER CODE END st_sigfox_open_2 */
+  /* USER CODE END st_owley_open_2 */
 }
 
 static void CmdProcessNotify(void)
