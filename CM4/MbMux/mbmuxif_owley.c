@@ -1,18 +1,15 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    mbmuxif_sigfox.c
-  * @author  MCD Application Team
-  * @brief   allows CM4 application to register and handle SigfoxWAN via MBMUX
+  * @file    mbmuxif_owley.c
+  * @author  Owley Team
+  * @brief   allows CM4 application to register and handle Owley via MBMUX
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright Owley.
   * All rights reserved.
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -53,7 +50,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-static MBMUX_ComParam_t *SigfoxComObj;
+static MBMUX_ComParam_t *OwleyComObj;
 
 UTIL_MEM_PLACE_IN_SECTION("MB_MEM1") uint32_t aOwleyCmdRespBuff[MAX_PARAM_OF_OWLEY_CMD_FUNCTIONS];/*shared*/
 UTIL_MEM_PLACE_IN_SECTION("MB_MEM1") uint32_t aOwleyNotifAckBuff[MAX_PARAM_OF_OWLEY_NOTIF_FUNCTIONS];/*shared*/
@@ -64,19 +61,19 @@ UTIL_MEM_PLACE_IN_SECTION("MB_MEM1") uint32_t aOwleyNotifAckBuff[MAX_PARAM_OF_OW
 
 /* Private function prototypes -----------------------------------------------*/
 /**
-  * @brief  Sigfox response callbacks: set event to release waiting task
-  * @param  ComObj pointer to the Sigfox com param buffer
+  * @brief  Owley response callbacks: set event to release waiting task
+  * @param  ComObj pointer to the Owley com param buffer
   */
 static void MBMUXIF_IsrOwleyRespRcvCb(void *ComObj);
 
 /**
-  * @brief  Sigfox notification callbacks: schedules a task in order to quit the ISR
-  * @param  ComObj pointer to the Sigfox com param buffer
+  * @brief  Owley notification callbacks: schedules a task in order to quit the ISR
+  * @param  ComObj pointer to the Owley com param buffer
   */
 static void MBMUXIF_IsrOwleyNotifRcvCb(void *ComObj);
 
 /**
-  * @brief  Sigfox task to process the notification
+  * @brief  Owley task to process the notification
   */
 static void MBMUXIF_TaskOwleyNotifRcv(void);
 
@@ -91,9 +88,9 @@ int8_t MBMUXIF_OwleyInit(void)
   int32_t cm0_vers = 0;
   int8_t ret = 0;
 
-  /* USER CODE BEGIN MBMUXIF_SigfoxInit_1 */
+  /* USER CODE BEGIN MBMUXIF_OwleyInit */
 
-  /* USER CODE END MBMUXIF_SigfoxInit_1 */
+  /* USER CODE END MBMUXIF_OwleyInit */
 
   p_cm0plus_system_info = MBMUXIF_SystemGetFeatCapabInfoPtr(FEAT_INFO_SYSTEM_ID);
   /* abstract CM0 release version from RC (release candidate) and compare */
@@ -133,59 +130,59 @@ int8_t MBMUXIF_OwleyInit(void)
     ret = 0;
   }
 
-  /* USER CODE BEGIN MBMUXIF_SigfoxInit_Last */
+  /* USER CODE BEGIN MBMUXIF_OwleyInit_Last */
 
-  /* USER CODE END MBMUXIF_SigfoxInit_Last */
+  /* USER CODE END MBMUXIF_OwleyInit_Last */
 
   return ret;
 }
 
 MBMUX_ComParam_t *MBMUXIF_GetOwleyFeatureCmdComPtr(void)
 {
-  /* USER CODE BEGIN MBMUXIF_GetSigfoxFeatureCmdComPtr_1 */
+  /* USER CODE BEGIN MBMUXIF_GetOwleyFeatureCmdComPtr_1 */
 
-  /* USER CODE END MBMUXIF_GetSigfoxFeatureCmdComPtr_1 */
+  /* USER CODE END MBMUXIF_GetOwleyFeatureCmdComPtr_1 */
   MBMUX_ComParam_t *com_param_ptr = MBMUX_GetFeatureComPtr(FEAT_INFO_OWLEY_ID, MBMUX_CMD_RESP);
   if (com_param_ptr == NULL)
   {
     Error_Handler(); /* feature isn't registered */
   }
   return com_param_ptr;
-  /* USER CODE BEGIN MBMUXIF_GetSigfoxFeatureCmdComPtr_Last */
+  /* USER CODE BEGIN MBMUXIF_GetOwleyFeatureCmdComPtr_Last */
 
-  /* USER CODE END MBMUXIF_GetSigfoxFeatureCmdComPtr_Last */
+  /* USER CODE END MBMUXIF_GetOwleyFeatureCmdComPtr_Last */
 }
 
 void MBMUXIF_OwleySendCmd(void)
 {
-  /* USER CODE BEGIN MBMUXIF_SigfoxSendCmd_1 */
+  /* USER CODE BEGIN MBMUXIF_OwleySendCmd */
 
-  /* USER CODE END MBMUXIF_SigfoxSendCmd_1 */
+  /* USER CODE END MBMUXIF_OwleySendCmd */
   if (MBMUX_CommandSnd(FEAT_INFO_OWLEY_ID) == 0)
   {
-    UTIL_SEQ_WaitEvt(1 << CFG_SEQ_Evt_MbSigfoxRespRcv);
+    UTIL_SEQ_WaitEvt(1 << CFG_SEQ_Evt_MbOwleyRespRcv);
   }
   else
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN MBMUXIF_SigfoxSendCmd_Last */
+  /* USER CODE BEGIN MBMUXIF_OwleySendCmd_Last */
 
-  /* USER CODE END MBMUXIF_SigfoxSendCmd_Last */
+  /* USER CODE END MBMUXIF_OwleySendCmd_Last */
 }
 
 void MBMUXIF_OwleySendAck(void)
 {
-  /* USER CODE BEGIN MBMUXIF_SigfoxSendAck_1 */
+  /* USER CODE BEGIN MBMUXIF_OwleySendAck_1 */
 
-  /* USER CODE END MBMUXIF_SigfoxSendAck_1 */
+  /* USER CODE END MBMUXIF_OwleySendAck_1 */
   if (MBMUX_AcknowledgeSnd(FEAT_INFO_OWLEY_ID) != 0)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN MBMUXIF_SigfoxSendAck_Last */
+  /* USER CODE BEGIN MBMUXIF_OwleySendAck_Last */
 
-  /* USER CODE END MBMUXIF_SigfoxSendAck_Last */
+  /* USER CODE END MBMUXIF_OwleySendAck_Last */
 }
 
 /* USER CODE BEGIN EFD */
@@ -195,36 +192,36 @@ void MBMUXIF_OwleySendAck(void)
 /* Private functions ---------------------------------------------------------*/
 static void MBMUXIF_IsrOwleyRespRcvCb(void *ComObj)
 {
-  /* USER CODE BEGIN MBMUXIF_IsrSigfoxRespRcvCb_1 */
+  /* USER CODE BEGIN MBMUXIF_IsrOwleyRespRcvCb_1 */
 
-  /* USER CODE END MBMUXIF_IsrSigfoxRespRcvCb_1 */
-  UTIL_SEQ_SetEvt(1 << CFG_SEQ_Evt_MbSigfoxRespRcv);
-  /* USER CODE BEGIN MBMUXIF_IsrSigfoxRespRcvCb_Last */
+  /* USER CODE END MBMUXIF_IsrOwleyRespRcvCb_1 */
+  UTIL_SEQ_SetEvt(1 << CFG_SEQ_Evt_MbOwleyRespRcv);
+  /* USER CODE BEGIN MBMUXIF_IsrOwleyRespRcvCb_Last */
 
-  /* USER CODE END MBMUXIF_IsrSigfoxRespRcvCb_Last */
+  /* USER CODE END MBMUXIF_IsrOwleyRespRcvCb_Last */
 }
 
 static void MBMUXIF_IsrOwleyNotifRcvCb(void *ComObj)
 {
-  /* USER CODE BEGIN MBMUXIF_IsrSigfoxNotifRcvCb_1 */
+  /* USER CODE BEGIN MBMUXIF_IsrOwleyNotifRcvCb_1 */
 
-  /* USER CODE END MBMUXIF_IsrSigfoxNotifRcvCb_1 */
-  SigfoxComObj = (MBMUX_ComParam_t *) ComObj;
+  /* USER CODE END MBMUXIF_IsrOwleyNotifRcvCb_1 */
+  OwleyComObj = (MBMUX_ComParam_t *) ComObj;
   UTIL_SEQ_SetTask(1 << CFG_SEQ_Task_MbOwleyNotifRcv, CFG_SEQ_Prio_0);
-  /* USER CODE BEGIN MBMUXIF_IsrSigfoxNotifRcvCb_Last */
+  /* USER CODE BEGIN MBMUXIF_IsrOwleyNotifRcvCb_Last */
 
-  /* USER CODE END MBMUXIF_IsrSigfoxNotifRcvCb_Last */
+  /* USER CODE END MBMUXIF_IsrOwleyNotifRcvCb_Last */
 }
 
 static void MBMUXIF_TaskOwleyNotifRcv(void)
 {
-  /* USER CODE BEGIN MBMUXIF_TaskSigfoxNotifRcv_1 */
+  /* USER CODE BEGIN MBMUXIF_TaskOwleyNotifRcv_1 */
 
-  /* USER CODE END MBMUXIF_TaskSigfoxNotifRcv_1 */
-  Process_Sigfox_Notif(SigfoxComObj);
-  /* USER CODE BEGIN MBMUXIF_TaskSigfoxNotifRcv_Last */
+  /* USER CODE END MBMUXIF_TaskOwleyNotifRcv_1 */
+  Process_Owley_Notif(OwleyComObj);
+  /* USER CODE BEGIN MBMUXIF_TaskOwleyNotifRcv_Last */
 
-  /* USER CODE END MBMUXIF_TaskSigfoxNotifRcv_Last */
+  /* USER CODE END MBMUXIF_TaskOwleyNotifRcv_Last */
 }
 
 /* USER CODE BEGIN PrFD */

@@ -83,7 +83,7 @@ typedef struct sSigfoxCallback
   * @brief This function processes the callbacks and primitives from Cm0
   * @param ComObj exchange buffer parameter
   */
-void Process_Sigfox_Notif(MBMUX_ComParam_t *ComObj);
+void Process_Owley_Notif(MBMUX_ComParam_t *ComObj);
 
 /**
   * @brief Register the callbacks structure for the process notification

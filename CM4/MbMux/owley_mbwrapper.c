@@ -577,7 +577,7 @@ void Sigfox_Register(SigfoxCallback_t *SigfoxCallback)
   /* USER CODE END Sigfox_Register_2 */
 }
 
-void Process_Sigfox_Notif(MBMUX_ComParam_t *ComObj)
+void Process_Owley_Notif(MBMUX_ComParam_t *ComObj)
 {
   /* USER CODE BEGIN Process_Sigfox_Notif_1 */
 

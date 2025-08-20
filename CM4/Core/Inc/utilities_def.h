@@ -99,7 +99,7 @@ typedef enum
   /* CM4 */
   CFG_SEQ_Evt_MbSystemRespRcv,
   CFG_SEQ_Evt_MbKmsRespRcv,
-  CFG_SEQ_Evt_MbSigfoxRespRcv,
+  CFG_SEQ_Evt_MbOwleyRespRcv,
   CFG_SEQ_Evt_MbRadioRespRcv,
   /* USER CODE BEGIN CFG_SEQ_IdleEvt_Id_t */
 
