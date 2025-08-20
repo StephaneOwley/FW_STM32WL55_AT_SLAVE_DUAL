@@ -1,19 +1,16 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    sigfox_mbwrapper.c
-  * @author  MCD Application Team
-  * @brief   This file implements the CM4 side wrapper of the Sigfox interface
+  * @file    Owley_mbwrapper.c
+  * @author  owley Team
+  * @brief   This file implements the CM4 side wrapper of the Owley interface
   *          shared between M0 and M4.
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) Owley.
   * All rights reserved.
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -74,11 +71,11 @@
 /**
   * @brief Sigfox buffer to exchange data between from CM4 to CM0+
   */
-UTIL_MEM_PLACE_IN_SECTION("MB_MEM1") uint8_t aSigfoxMbWrapShareBuffer[OWLEY_MBWRAP_SHBUF_SIZE];
+UTIL_MEM_PLACE_IN_SECTION("MB_MEM1") uint8_t aOwleyMbWrapShareBuffer[OWLEY_MBWRAP_SHBUF_SIZE];
 
 static sfx_u8(* app_cb)(sfx_u8 rc_bit_mask, sfx_s16 rssi);
 
-static SigfoxCallback_t *callback_wrap;
+static OwleyCallback_t *callback_wrap;
 
 /* USER CODE BEGIN PV */
 
@@ -106,19 +103,19 @@ sfx_error_t OWLEY_API_open(sfx_rc_t *rc)
   }
 
   /* copy data from Cm4 stack memory to shared memory */
-  UTIL_MEM_cpy_8((uint8_t *) aSigfoxMbWrapShareBuffer, (uint8_t *) rc, sizeof(sfx_rc_t));
+  UTIL_MEM_cpy_8((uint8_t *) aOwleyMbWrapShareBuffer, (uint8_t *) rc, sizeof(sfx_rc_t));
 
   com_obj = MBMUXIF_GetOwleyFeatureCmdComPtr();
   com_obj->MsgId = OWLEY_START_ID;
   com_buffer = com_obj->ParamBuf;
-  com_buffer[i++] = (uint32_t) aSigfoxMbWrapShareBuffer;
+  com_buffer[i++] = (uint32_t) aOwleyMbWrapShareBuffer;
   com_obj->ParamCnt = i;
   MBMUXIF_OwleySendCmd();
   /* waiting for event */
   /* once event is received and semaphore released: */
 
   /* copy back data from shared memory to Cm4 stack private memory */
-  UTIL_MEM_cpy_8((uint8_t *) rc, (uint8_t *) aSigfoxMbWrapShareBuffer, sizeof(sfx_rc_t));
+  UTIL_MEM_cpy_8((uint8_t *) rc, (uint8_t *) aOwleyMbWrapShareBuffer, sizeof(sfx_rc_t));
 
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
@@ -127,7 +124,7 @@ sfx_error_t OWLEY_API_open(sfx_rc_t *rc)
   /* USER CODE END OWLEY_API_open_2 */
 }
 
-sfx_error_t SIGFOX_API_close(void)
+sfx_error_t OWLEY_API_close(void)
 {
   /* USER CODE BEGIN SIGFOX_API_close_1 */
 
@@ -148,7 +145,7 @@ sfx_error_t SIGFOX_API_close(void)
   /* USER CODE END SIGFOX_API_close_2 */
 }
 
-sfx_error_t SIGFOX_API_send_frame(sfx_u8 *customer_data, sfx_u8 customer_data_length,
+sfx_error_t OWLEY_API_send_frame(sfx_u8 *customer_data, sfx_u8 customer_data_length,
                                   sfx_u8 *customer_response, sfx_u8 tx_mode,
                                   sfx_bool initiate_downlink_flag)
 {
@@ -170,17 +167,17 @@ sfx_error_t SIGFOX_API_send_frame(sfx_u8 *customer_data, sfx_u8 customer_data_le
   }
 
   /* copy data from Cm4 stack memory to shared memory */
-  UTIL_MEM_cpy_8((uint8_t *) aSigfoxMbWrapShareBuffer, (uint8_t *) customer_data,
+  UTIL_MEM_cpy_8((uint8_t *) aOwleyMbWrapShareBuffer, (uint8_t *) customer_data,
                  OWLEY_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8));
-  UTIL_MEM_cpy_8((uint8_t *)(aSigfoxMbWrapShareBuffer + OWLEY_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8)),
+  UTIL_MEM_cpy_8((uint8_t *)(aOwleyMbWrapShareBuffer + OWLEY_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8)),
                  (uint8_t *)customer_response, OWLEY_MAX_DL_PAYLOAD_SIZE * sizeof(sfx_u8));
 
   com_obj = MBMUXIF_GetOwleyFeatureCmdComPtr();
   com_obj->MsgId = OWLEY_SEND_FRAME_DWNL_ID;
   com_buffer = com_obj->ParamBuf;
-  com_buffer[i++] = (uint32_t) aSigfoxMbWrapShareBuffer;
+  com_buffer[i++] = (uint32_t) aOwleyMbWrapShareBuffer;
   com_buffer[i++] = (uint32_t) customer_data_length;
-  com_buffer[i++] = ((uint32_t) aSigfoxMbWrapShareBuffer + OWLEY_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8));
+  com_buffer[i++] = ((uint32_t) aOwleyMbWrapShareBuffer + OWLEY_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8));
   com_buffer[i++] = (uint32_t) tx_mode;
   com_buffer[i++] = (uint32_t) initiate_downlink_flag;
 
@@ -190,10 +187,10 @@ sfx_error_t SIGFOX_API_send_frame(sfx_u8 *customer_data, sfx_u8 customer_data_le
   /* once event is received and semaphore released: */
 
   /* copy back data from shared memory to Cm4 stack memory */
-  UTIL_MEM_cpy_8((uint8_t *) customer_data, (uint8_t *) aSigfoxMbWrapShareBuffer,
+  UTIL_MEM_cpy_8((uint8_t *) customer_data, (uint8_t *) aOwleyMbWrapShareBuffer,
                  OWLEY_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8));
   UTIL_MEM_cpy_8((uint8_t *)customer_response,
-                 (uint8_t *)(aSigfoxMbWrapShareBuffer + OWLEY_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8)),
+                 (uint8_t *)(aOwleyMbWrapShareBuffer + OWLEY_MAX_UL_PAYLOAD_SIZE * sizeof(sfx_u8)),
                  OWLEY_MAX_DL_PAYLOAD_SIZE * sizeof(sfx_u8));
 
   ret = com_obj->ReturnVal;
@@ -203,7 +200,7 @@ sfx_error_t SIGFOX_API_send_frame(sfx_u8 *customer_data, sfx_u8 customer_data_le
   /* USER CODE END SIGFOX_API_send_frame_2 */
 }
 
-sfx_error_t SIGFOX_API_send_bit(sfx_bool bit_value,
+sfx_error_t OWLEY_API_send_bit(sfx_bool bit_value,
                                 sfx_u8 *customer_response,
                                 sfx_u8 tx_mode,
                                 sfx_bool initiate_downlink_flag)
@@ -222,14 +219,14 @@ sfx_error_t SIGFOX_API_send_bit(sfx_bool bit_value,
   }
 
   /* copy data from Cm4 stack memory to shared memory */
-  UTIL_MEM_cpy_8((uint8_t *)aSigfoxMbWrapShareBuffer, (uint8_t *)customer_response,
+  UTIL_MEM_cpy_8((uint8_t *)aOwleyMbWrapShareBuffer, (uint8_t *)customer_response,
                  OWLEY_MAX_DL_PAYLOAD_SIZE * sizeof(sfx_u8));
 
   com_obj = MBMUXIF_GetOwleyFeatureCmdComPtr();
   com_obj->MsgId = OWLEY_SEND_BIT_ID;
   com_buffer = com_obj->ParamBuf;
   com_buffer[i++] = (uint32_t) bit_value;
-  com_buffer[i++] = (uint32_t) aSigfoxMbWrapShareBuffer;
+  com_buffer[i++] = (uint32_t) aOwleyMbWrapShareBuffer;
   com_buffer[i++] = (uint32_t) tx_mode;
   com_buffer[i++] = (uint32_t) initiate_downlink_flag;
 
@@ -239,7 +236,7 @@ sfx_error_t SIGFOX_API_send_bit(sfx_bool bit_value,
   /* once event is received and semaphore released: */
 
   /* copy back data from shared memory to Cm4 stack memory */
-  UTIL_MEM_cpy_8((uint8_t *)customer_response, (uint8_t *) aSigfoxMbWrapShareBuffer,
+  UTIL_MEM_cpy_8((uint8_t *)customer_response, (uint8_t *) aOwleyMbWrapShareBuffer,
                  OWLEY_MAX_DL_PAYLOAD_SIZE * sizeof(sfx_u8));
 
   ret = com_obj->ReturnVal;
@@ -249,7 +246,7 @@ sfx_error_t SIGFOX_API_send_bit(sfx_bool bit_value,
   /* USER CODE END SIGFOX_API_send_bit_2 */
 }
 
-sfx_error_t SIGFOX_API_send_outofband(sfx_oob_enum_t oob_type)
+sfx_error_t OWLEY_API_send_outofband(sfx_oob_enum_t oob_type)
 {
   /* USER CODE BEGIN SIGFOX_API_send_outofband_1 */
 
@@ -275,7 +272,7 @@ sfx_error_t SIGFOX_API_send_outofband(sfx_oob_enum_t oob_type)
   /* USER CODE END SIGFOX_API_send_outofband_2 */
 }
 
-sfx_error_t SIGFOX_API_set_std_config(sfx_u32 config_words[NB_ELEMENTS_MAX],
+sfx_error_t OWLEY_API_set_std_config(sfx_u32 config_words[NB_ELEMENTS_MAX],
                                       sfx_bool timer_enable)
 {
   /* USER CODE BEGIN SIGFOX_API_set_std_config_1 */
@@ -287,12 +284,12 @@ sfx_error_t SIGFOX_API_set_std_config(sfx_u32 config_words[NB_ELEMENTS_MAX],
   uint32_t ret;
 
   /* copy data from Cm4 stack memory to shared memory */
-  UTIL_MEM_cpy_8((uint8_t *) aSigfoxMbWrapShareBuffer, (uint8_t *) config_words, NB_ELEMENTS_MAX * sizeof(sfx_u32));
+  UTIL_MEM_cpy_8((uint8_t *) aOwleyMbWrapShareBuffer, (uint8_t *) config_words, NB_ELEMENTS_MAX * sizeof(sfx_u32));
 
   com_obj = MBMUXIF_GetOwleyFeatureCmdComPtr();
   com_obj->MsgId = OWLEY_SET_STD_ID;
   com_buffer = com_obj->ParamBuf;
-  com_buffer[i++] = (uint32_t) aSigfoxMbWrapShareBuffer;
+  com_buffer[i++] = (uint32_t) aOwleyMbWrapShareBuffer;
   com_buffer[i++] = (uint32_t) timer_enable;
 
   com_obj->ParamCnt = i;
@@ -301,7 +298,7 @@ sfx_error_t SIGFOX_API_set_std_config(sfx_u32 config_words[NB_ELEMENTS_MAX],
   /* once event is received and semaphore released: */
 
   /* copy back data from shared memory to Cm4 stack private memory */
-  UTIL_MEM_cpy_8((uint8_t *) config_words, (uint8_t *) aSigfoxMbWrapShareBuffer, NB_ELEMENTS_MAX * sizeof(sfx_u32));
+  UTIL_MEM_cpy_8((uint8_t *) config_words, (uint8_t *) aOwleyMbWrapShareBuffer, NB_ELEMENTS_MAX * sizeof(sfx_u32));
 
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
@@ -310,7 +307,7 @@ sfx_error_t SIGFOX_API_set_std_config(sfx_u32 config_words[NB_ELEMENTS_MAX],
   /* USER CODE END SIGFOX_API_set_std_config_2 */
 }
 
-sfx_error_t SIGFOX_API_start_continuous_transmission(sfx_u32 frequency, sfx_modulation_type_t type)
+sfx_error_t OWLEY_API_start_continuous_transmission(sfx_u32 frequency, sfx_modulation_type_t type)
 {
   /* USER CODE BEGIN SIGFOX_API_start_continuous_transmission_1 */
 
@@ -321,13 +318,13 @@ sfx_error_t SIGFOX_API_start_continuous_transmission(sfx_u32 frequency, sfx_modu
   uint32_t ret;
 
   /* copy data from Cm4 stack memory to shared memory */
-  UTIL_MEM_cpy_8((uint8_t *) aSigfoxMbWrapShareBuffer, (uint8_t *) type, sizeof(sfx_modulation_type_t));
+  UTIL_MEM_cpy_8((uint8_t *) aOwleyMbWrapShareBuffer, (uint8_t *) type, sizeof(sfx_modulation_type_t));
 
   com_obj = MBMUXIF_GetOwleyFeatureCmdComPtr();
   com_obj->MsgId = OWLEY_START_CONTINUOUS_ID;
   com_buffer = com_obj->ParamBuf;
   com_buffer[i++] = (uint32_t) frequency;
-  com_buffer[i++] = (uint32_t) aSigfoxMbWrapShareBuffer;
+  com_buffer[i++] = (uint32_t) aOwleyMbWrapShareBuffer;
 
   com_obj->ParamCnt = i;
   MBMUXIF_OwleySendCmd();
@@ -335,7 +332,7 @@ sfx_error_t SIGFOX_API_start_continuous_transmission(sfx_u32 frequency, sfx_modu
   /* once event is received and semaphore released: */
 
   /* copy back data from shared memory to Cm4 stack private memory */
-  UTIL_MEM_cpy_8((uint8_t *) type, (uint8_t *) aSigfoxMbWrapShareBuffer, sizeof(sfx_modulation_type_t));
+  UTIL_MEM_cpy_8((uint8_t *) type, (uint8_t *) aOwleyMbWrapShareBuffer, sizeof(sfx_modulation_type_t));
 
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
@@ -344,7 +341,7 @@ sfx_error_t SIGFOX_API_start_continuous_transmission(sfx_u32 frequency, sfx_modu
   /* USER CODE END SIGFOX_API_start_continuous_transmission_2 */
 }
 
-sfx_error_t SIGFOX_API_stop_continuous_transmission(void)
+sfx_error_t OWLEY_API_stop_continuous_transmission(void)
 {
   /* USER CODE BEGIN SIGFOX_API_stop_continuous_transmission_1 */
 
@@ -365,7 +362,7 @@ sfx_error_t SIGFOX_API_stop_continuous_transmission(void)
   /* USER CODE END SIGFOX_API_stop_continuous_transmission_2 */
 }
 
-sfx_error_t SIGFOX_API_get_version(sfx_u8 **version, sfx_u8 *size, sfx_version_type_t type)
+sfx_error_t OWLEY_API_get_version(sfx_u8 **version, sfx_u8 *size, sfx_version_type_t type)
 {
   /* USER CODE BEGIN SIGFOX_API_get_version_1 */
 
@@ -381,14 +378,14 @@ sfx_error_t SIGFOX_API_get_version(sfx_u8 **version, sfx_u8 *size, sfx_version_t
   }
 
   /* copy data from Cm4 stack memory to shared memory */
-  UTIL_MEM_cpy_8((uint8_t *) aSigfoxMbWrapShareBuffer, (uint8_t *) version, sizeof(sfx_u32));
-  UTIL_MEM_cpy_8((uint8_t *)(aSigfoxMbWrapShareBuffer + sizeof(sfx_u32)), (uint8_t *) size, sizeof(sfx_u8));
+  UTIL_MEM_cpy_8((uint8_t *) aOwleyMbWrapShareBuffer, (uint8_t *) version, sizeof(sfx_u32));
+  UTIL_MEM_cpy_8((uint8_t *)(aOwleyMbWrapShareBuffer + sizeof(sfx_u32)), (uint8_t *) size, sizeof(sfx_u8));
 
   com_obj = MBMUXIF_GetOwleyFeatureCmdComPtr();
   com_obj->MsgId = OWLEY_GET_VERSION_ID;
   com_buffer = com_obj->ParamBuf;
-  com_buffer[i++] = (uint32_t) aSigfoxMbWrapShareBuffer;
-  com_buffer[i++] = (uint32_t)(aSigfoxMbWrapShareBuffer + sizeof(sfx_u32));
+  com_buffer[i++] = (uint32_t) aOwleyMbWrapShareBuffer;
+  com_buffer[i++] = (uint32_t)(aOwleyMbWrapShareBuffer + sizeof(sfx_u32));
   com_buffer[i++] = (uint32_t) type;
   com_obj->ParamCnt = i;
   MBMUXIF_OwleySendCmd();
@@ -396,8 +393,8 @@ sfx_error_t SIGFOX_API_get_version(sfx_u8 **version, sfx_u8 *size, sfx_version_t
   /* once event is received and semaphore released: */
 
   /* copy back data from shared memory to Cm4 stack private memory */
-  UTIL_MEM_cpy_8((uint8_t *) version, (uint8_t *) aSigfoxMbWrapShareBuffer, sizeof(sfx_u32));
-  UTIL_MEM_cpy_8((uint8_t *) size, (uint8_t *)(aSigfoxMbWrapShareBuffer + sizeof(sfx_u32)), sizeof(sfx_u8));
+  UTIL_MEM_cpy_8((uint8_t *) version, (uint8_t *) aOwleyMbWrapShareBuffer, sizeof(sfx_u32));
+  UTIL_MEM_cpy_8((uint8_t *) size, (uint8_t *)(aOwleyMbWrapShareBuffer + sizeof(sfx_u32)), sizeof(sfx_u8));
 
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
@@ -406,7 +403,7 @@ sfx_error_t SIGFOX_API_get_version(sfx_u8 **version, sfx_u8 *size, sfx_version_t
   /* USER CODE END SIGFOX_API_get_version_2 */
 }
 
-sfx_error_t SIGFOX_API_get_device_id(sfx_u8 *dev_id)
+sfx_error_t OWLEY_API_get_device_id(sfx_u8 *dev_id)
 {
   /* USER CODE BEGIN SIGFOX_API_get_device_id_1 */
 
@@ -422,19 +419,19 @@ sfx_error_t SIGFOX_API_get_device_id(sfx_u8 *dev_id)
   }
 
   /* copy data from Cm4 stack memory to shared memory */
-  UTIL_MEM_cpy_8((uint8_t *) aSigfoxMbWrapShareBuffer, (uint8_t *) dev_id, sizeof(sfx_u32));
+  UTIL_MEM_cpy_8((uint8_t *) aOwleyMbWrapShareBuffer, (uint8_t *) dev_id, sizeof(sfx_u32));
 
   com_obj = MBMUXIF_GetOwleyFeatureCmdComPtr();
   com_obj->MsgId = OWLEY_GET_DEVICE_ID;
   com_buffer = com_obj->ParamBuf;
-  com_buffer[i++] = (uint32_t) aSigfoxMbWrapShareBuffer;
+  com_buffer[i++] = (uint32_t) aOwleyMbWrapShareBuffer;
   com_obj->ParamCnt = i;
   MBMUXIF_OwleySendCmd();
   /* waiting for event */
   /* once event is received and semaphore released: */
 
   /* copy back data from shared memory to Cm4 stack private memory */
-  UTIL_MEM_cpy_8((uint8_t *) dev_id, (uint8_t *) aSigfoxMbWrapShareBuffer, sizeof(sfx_u32));
+  UTIL_MEM_cpy_8((uint8_t *) dev_id, (uint8_t *) aOwleyMbWrapShareBuffer, sizeof(sfx_u32));
 
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
@@ -443,7 +440,7 @@ sfx_error_t SIGFOX_API_get_device_id(sfx_u8 *dev_id)
   /* USER CODE END SIGFOX_API_get_device_id_2 */
 }
 
-sfx_error_t SIGFOX_API_get_initial_pac(sfx_u8 *initial_pac)
+sfx_error_t OWLEY_API_get_initial_pac(sfx_u8 *initial_pac)
 {
   /* USER CODE BEGIN SIGFOX_API_get_initial_pac_1 */
 
@@ -459,19 +456,19 @@ sfx_error_t SIGFOX_API_get_initial_pac(sfx_u8 *initial_pac)
   }
 
   /* copy data from Cm4 stack memory to shared memory */
-  UTIL_MEM_cpy_8((uint8_t *) aSigfoxMbWrapShareBuffer, (uint8_t *) initial_pac, PAC_LENGTH * sizeof(sfx_u8));
+  UTIL_MEM_cpy_8((uint8_t *) aOwleyMbWrapShareBuffer, (uint8_t *) initial_pac, PAC_LENGTH * sizeof(sfx_u8));
 
   com_obj = MBMUXIF_GetOwleyFeatureCmdComPtr();
   com_obj->MsgId = OWLEY_GET_INIT_PAC_ID;
   com_buffer = com_obj->ParamBuf;
-  com_buffer[i++] = (uint32_t) aSigfoxMbWrapShareBuffer;
+  com_buffer[i++] = (uint32_t) aOwleyMbWrapShareBuffer;
   com_obj->ParamCnt = i;
   MBMUXIF_OwleySendCmd();
   /* waiting for event */
   /* once event is received and semaphore released: */
 
   /* copy back data from shared memory to Cm4 stack private memory */
-  UTIL_MEM_cpy_8((uint8_t *) initial_pac, (uint8_t *) aSigfoxMbWrapShareBuffer, PAC_LENGTH * sizeof(sfx_u8));
+  UTIL_MEM_cpy_8((uint8_t *) initial_pac, (uint8_t *) aOwleyMbWrapShareBuffer, PAC_LENGTH * sizeof(sfx_u8));
 
   ret = com_obj->ReturnVal;
   return (sfx_error_t) ret;
@@ -480,7 +477,7 @@ sfx_error_t SIGFOX_API_get_initial_pac(sfx_u8 *initial_pac)
   /* USER CODE END SIGFOX_API_get_initial_pac_2 */
 }
 
-sfx_error_t SIGFOX_API_set_rc_sync_period(sfx_u16 rc_sync_period)
+sfx_error_t OWLEY_API_set_rc_sync_period(sfx_u16 rc_sync_period)
 {
   /* USER CODE BEGIN SIGFOX_API_set_rc_sync_period_1 */
 
@@ -533,7 +530,7 @@ sfx_error_t ADDON_SIGFOX_RF_PROTOCOL_API_test_mode(sfx_rc_enum_t rc_enum, sfx_te
   /* USER CODE END ADDON_SIGFOX_RF_PROTOCOL_API_test_mode_2 */
 }
 
-void SigfoxInfo_Init(void)
+void OwleyInfo_Init(void)
 {
   /* USER CODE BEGIN SigfoxInfo_Init_1 */
 
@@ -552,7 +549,7 @@ void SigfoxInfo_Init(void)
   /* USER CODE END SigfoxInfo_Init_2 */
 }
 
-SigfoxInfo_t *SigfoxInfo_GetPtr(void)
+SigfoxInfo_t *OwleyInfo_GetPtr(void)
 {
   /* USER CODE BEGIN SigfoxInfo_GetPtr_1 */
 
@@ -566,12 +563,12 @@ SigfoxInfo_t *SigfoxInfo_GetPtr(void)
   /* USER CODE END SigfoxInfo_GetPtr_2 */
 }
 
-void Sigfox_Register(SigfoxCallback_t *SigfoxCallback)
+void Owley_Register(OwleyCallback_t *OwleyCallback)
 {
   /* USER CODE BEGIN Sigfox_Register_1 */
 
   /* USER CODE END Sigfox_Register_1 */
-  callback_wrap = SigfoxCallback;
+  callback_wrap = OwleyCallback;
   /* USER CODE BEGIN Sigfox_Register_2 */
 
   /* USER CODE END Sigfox_Register_2 */

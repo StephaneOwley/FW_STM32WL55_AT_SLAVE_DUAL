@@ -566,7 +566,7 @@ typedef enum
  *  SIGFOX_ERROR_CODE for this function : SFX_ERR_NONE and SFX_ERR_API_OPEN_xx
  *
  *******************************************************************/
-sfx_error_t SIGFOX_API_open(sfx_rc_t* rc);
+sfx_error_t OWLEY_API_open(sfx_rc_t* rc);
 
 /*!******************************************************************
  * \fn sfx_error_t SIGFOX_API_close(void)
@@ -584,7 +584,7 @@ sfx_error_t SIGFOX_API_open(sfx_rc_t* rc);
  *  SIGFOX_ERROR_CODE for this function : SFX_ERR_NONE and SFX_ERR_API_CLOSE_xx
  *
  *******************************************************************/
-sfx_error_t SIGFOX_API_close(void);
+sfx_error_t OWLEY_API_close(void);
 
 /*!******************************************************************
  * \fn sfx_error_t SIGFOX_API_send_frame(sfx_u8 *customer_data, sfx_u8 customer_data_length, sfx_u8 *customer_response, sfx_u8 tx_mode, sfx_bool initiate_downlink_flag)
@@ -615,7 +615,7 @@ sfx_error_t SIGFOX_API_close(void);
  *  SIGFOX_ERROR_CODE for this function : SFX_ERR_NONE and SFX_ERR_API_SEND_FRAME_xx  or  SFX_ERR_INT_xx
  *
  *******************************************************************/
-sfx_error_t SIGFOX_API_send_frame(sfx_u8* customer_data,
+sfx_error_t OWLEY_API_send_frame(sfx_u8* customer_data,
                                   sfx_u8 customer_data_length,
                                   /*@null@*/ /*@out@*/sfx_u8* customer_response,
                                   sfx_u8 tx_mode,
@@ -652,7 +652,7 @@ sfx_error_t SIGFOX_API_send_frame(sfx_u8* customer_data,
  *  SIGFOX_ERROR_CODE for this function : SFX_ERR_NONE and SFX_ERR_API_SEND_BIT_xx  or  SFX_ERR_INT_xx
  *
  *******************************************************************/
-sfx_error_t SIGFOX_API_send_bit(sfx_bool bit_value,
+sfx_error_t OWLEY_API_send_bit(sfx_bool bit_value,
                                 /*@null@*/sfx_u8* customer_response,
                                 sfx_u8 tx_mode,
                                 sfx_bool initiate_downlink_flag);
@@ -692,7 +692,7 @@ sfx_error_t SIGFOX_API_send_bit(sfx_bool bit_value,
  *  SIGFOX_ERROR_CODE for this function : SFX_ERR_NONE and SFX_ERR_INT_xx
  *
  *******************************************************************/
-sfx_error_t SIGFOX_API_send_outofband(sfx_oob_enum_t oob_type);
+sfx_error_t OWLEY_API_send_outofband(sfx_oob_enum_t oob_type);
 
 /*!******************************************************************
  * \fn sfx_error_t SIGFOX_API_set_std_config(sfx_u32 config_words[3], sfx_bool timer_enable)
@@ -756,7 +756,7 @@ sfx_error_t SIGFOX_API_send_outofband(sfx_oob_enum_t oob_type);
  *  SIGFOX_ERROR_CODE for this function : SFX_ERR_NONE and SFX_ERR_API_SET_CONFIG_xx
  *
  *******************************************************************/
-sfx_error_t SIGFOX_API_set_std_config(sfx_u32 config_words[3],
+sfx_error_t OWLEY_API_set_std_config(sfx_u32 config_words[3],
                                       /*@unused@*/sfx_bool timer_enable);
 
 /*!******************************************************************
@@ -777,7 +777,7 @@ sfx_error_t SIGFOX_API_set_std_config(sfx_u32 config_words[3],
  *
  *  SIGFOX_ERROR_CODE for this function : SFX_ERR_API_START_CONTINUOUS_TRANSMISSION_xx
  *******************************************************************/
-sfx_error_t SIGFOX_API_start_continuous_transmission(sfx_u32 frequency, sfx_modulation_type_t type);
+sfx_error_t OWLEY_API_start_continuous_transmission(sfx_u32 frequency, sfx_modulation_type_t type);
 
 /*!******************************************************************
  * \fn sfx_error_t SIGFOX_API_stop_continuous_transmission(void);
@@ -793,7 +793,7 @@ sfx_error_t SIGFOX_API_start_continuous_transmission(sfx_u32 frequency, sfx_modu
  *
  *  SIGFOX_ERROR_CODE for this function : SFX_ERR_API_STOP_CONTINUOUS_TRANSMISSION_xx
  *******************************************************************/
-sfx_error_t SIGFOX_API_stop_continuous_transmission(void);
+sfx_error_t OWLEY_API_stop_continuous_transmission(void);
 
 /*!******************************************************************
  * \fn sfx_error_t SIGFOX_API_send_test_frame(sfx_u32 frequency, sfx_u8 * customer_data, sfx_u8 customer_data_length, sfx_bool initiate_downlink_flag )
@@ -816,7 +816,7 @@ sfx_error_t SIGFOX_API_stop_continuous_transmission(void);
  *
  *  SIGFOX_ERROR_CODE for this function : SFX_ERR_API_SEND_TEST_FRAME_xx
  *******************************************************************/
-sfx_error_t SIGFOX_API_send_test_frame(sfx_u32 frequency, sfx_u8* customer_data, sfx_u8 customer_data_length, sfx_bool initiate_downlink_flag);
+sfx_error_t OWLEY_API_send_test_frame(sfx_u32 frequency, sfx_u8* customer_data, sfx_u8 customer_data_length, sfx_bool initiate_downlink_flag);
 
 /*!******************************************************************
  * \fn sfx_error_t SIGFOX_API_receive_test_frame( sfx_u32 frequency, sfx_authentication_mode_t mode, sfx_u8 * buffer, sfx_u8 timeout, sfx_s16 * rssi  );
@@ -842,7 +842,7 @@ sfx_error_t SIGFOX_API_send_test_frame(sfx_u32 frequency, sfx_u8* customer_data,
  *
  *  SIGFOX_ERROR_CODE for this function : SFX_ERR_NONE and SFX_ERR_API_RECEIVE_TEST_FRAME_xx
  *******************************************************************/
-sfx_error_t SIGFOX_API_receive_test_frame(sfx_u32 frequency, sfx_authentication_mode_t mode,  sfx_u8* buffer, sfx_u8 timeout, sfx_s16* rssi);
+sfx_error_t OWLEY_API_receive_test_frame(sfx_u32 frequency, sfx_authentication_mode_t mode,  sfx_u8* buffer, sfx_u8 timeout, sfx_s16* rssi);
 
 /*!******************************************************************
  * \fn sfx_error_t SIGFOX_API_get_version(sfx_u8 **version, sfx_u8 *size, sfx_version_type_t type)
@@ -862,7 +862,7 @@ sfx_error_t SIGFOX_API_receive_test_frame(sfx_u32 frequency, sfx_authentication_
  *
  *  SIGFOX_ERROR_CODE for this function : SFX_ERR_NONE and  SFX_ERR_API_GET_VERSION_xx
  *******************************************************************/
-sfx_error_t SIGFOX_API_get_version(sfx_u8** version, sfx_u8* size, sfx_version_type_t type);
+sfx_error_t OWLEY_API_get_version(sfx_u8** version, sfx_u8* size, sfx_version_type_t type);
 
 /*!******************************************************************
  * \fn sfx_error_t SIGFOX_API_get_info(sfx_u8* returned_info);
@@ -919,7 +919,7 @@ sfx_error_t SIGFOX_API_get_info(sfx_u8* info);
  *  SIGFOX_ERROR_CODE for this function : SFX_ERR_NONE or SFX_ERR_API_GET_DEVICE_ID_xx
  *
  *******************************************************************/
-sfx_error_t SIGFOX_API_get_device_id(sfx_u8* dev_id);
+sfx_error_t OWLEY_API_get_device_id(sfx_u8* dev_id);
 
 /*!******************************************************************
  * \fn sfx_error_t SIGFOX_API_get_initial_pac(sfx_u8 *initial_pac);
@@ -940,7 +940,7 @@ sfx_error_t SIGFOX_API_get_device_id(sfx_u8* dev_id);
  *  SIGFOX_ERROR_CODE for this function : SFX_ERR_NONE or SFX_ERR_API_GET_INITIAL_PAC_xx
  *
  *******************************************************************/
-sfx_error_t SIGFOX_API_get_initial_pac(sfx_u8* initial_pac);
+sfx_error_t OWLEY_API_get_initial_pac(sfx_u8* initial_pac);
 
 /*!******************************************************************
  * \fn sfx_error_t SIGFOX_API_set_rc_sync_period(sfx_u16 rc_sync_period)
@@ -966,6 +966,6 @@ sfx_error_t SIGFOX_API_get_initial_pac(sfx_u8* initial_pac);
  *  SIGFOX_ERROR_CODE for this function : SFX_ERR_NONE or SFX_ERR_API_SET_RC_SYNC_PERIOD_xx
  *
  *******************************************************************/
-sfx_error_t SIGFOX_API_set_rc_sync_period(sfx_u16 rc_sync_period);
+sfx_error_t OWLEY_API_set_rc_sync_period(sfx_u16 rc_sync_period);
 
 #endif /* SIGFOX_API_H */

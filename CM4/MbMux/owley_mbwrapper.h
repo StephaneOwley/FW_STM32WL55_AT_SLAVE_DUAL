@@ -40,7 +40,7 @@ extern "C" {
 /*!
   * Sigfox callback structure
 */
-typedef struct sSigfoxCallback
+typedef struct sOwleyCallback
 {
   /*!
   * \brief   Measures the battery level
@@ -57,7 +57,7 @@ typedef struct sSigfoxCallback
   * \retval  Temperature level
   */
   int16_t (*GetTemperatureLevel)(void);
-} SigfoxCallback_t;
+} OwleyCallback_t;
 
 /* USER CODE BEGIN ET */
 
@@ -89,7 +89,7 @@ void Process_Owley_Notif(MBMUX_ComParam_t *ComObj);
   * @brief Register the callbacks structure for the process notification
   * @param SigfoxCallback struct of callbacks
   */
-void Sigfox_Register(SigfoxCallback_t *SigfoxCallback);
+void Owley_Register(OwleyCallback_t *OwleyCallback);
 
 //
 sfx_error_t OWLEY_API_open(sfx_rc_t *rc);

@@ -198,7 +198,7 @@ ATEerror_t AT_SendBit(const char *param)
   if (dlFlag == 0)
   {
     /* no dlFlag */
-    error = SIGFOX_API_send_bit(Bit, (sfx_u8 *) dl_msg, txRepeat, SFX_FALSE);
+    error = OWLEY_API_send_bit(Bit, (sfx_u8 *) dl_msg, txRepeat, SFX_FALSE);
     if (error != SFX_ERR_NONE)
     {
       if (error == SFX_ERR_INT_PROCESS_UPLINK_CS_TIMEOUT)
@@ -214,7 +214,7 @@ ATEerror_t AT_SendBit(const char *param)
   }
   else
   {
-    error = SIGFOX_API_send_bit(Bit, (sfx_u8 *) dl_msg, txRepeat, SFX_TRUE);
+    error = OWLEY_API_send_bit(Bit, (sfx_u8 *) dl_msg, txRepeat, SFX_TRUE);
 
     if (error == SFX_ERR_NONE)
     {
@@ -267,7 +267,7 @@ ATEerror_t AT_SendFrame(const char *param)
   /*Send Bytes to Sigfox Network */
   if (dlFlag == 0)
   {
-    error = SIGFOX_API_send_frame(ul_msg, ul_size, dl_msg, txRepeat, SFX_FALSE);
+    error = OWLEY_API_send_frame(ul_msg, ul_size, dl_msg, txRepeat, SFX_FALSE);
     if (error != SFX_ERR_NONE)
     {
       if (error == SFX_ERR_INT_PROCESS_UPLINK_CS_TIMEOUT)
@@ -283,7 +283,7 @@ ATEerror_t AT_SendFrame(const char *param)
   }
   else
   {
-    error = SIGFOX_API_send_frame(ul_msg, ul_size, dl_msg, txRepeat, SFX_TRUE);
+    error = OWLEY_API_send_frame(ul_msg, ul_size, dl_msg, txRepeat, SFX_TRUE);
 
     if (error == SFX_ERR_NONE)
     {
@@ -347,7 +347,7 @@ ATEerror_t AT_SendHexFrame(const char *param)
   /*Send Bytes to Sigfox Network */
   if (dlFlag == 0)
   {
-    error = SIGFOX_API_send_frame(ul_msg, ul_size, dl_msg, txRepeat, SFX_FALSE);
+    error = OWLEY_API_send_frame(ul_msg, ul_size, dl_msg, txRepeat, SFX_FALSE);
     if (error != SFX_ERR_NONE)
     {
       if (error == SFX_ERR_INT_PROCESS_UPLINK_CS_TIMEOUT)
@@ -363,7 +363,7 @@ ATEerror_t AT_SendHexFrame(const char *param)
   }
   else
   {
-    error = SIGFOX_API_send_frame(ul_msg, ul_size, dl_msg, txRepeat, SFX_TRUE);
+    error = OWLEY_API_send_frame(ul_msg, ul_size, dl_msg, txRepeat, SFX_TRUE);
 
     if (error == SFX_ERR_NONE)
     {
@@ -425,19 +425,19 @@ ATEerror_t AT_version_get(const char *param)
           (uint8_t)(feature_version >> 16),
           (uint8_t)(feature_version >> 8));
 
-  SIGFOX_API_get_version(&version, &size, VERSION_SIGFOX);
+  OWLEY_API_get_version(&version, &size, VERSION_SIGFOX);
   print_n(version, size);
   AT_PRINTF("\r\n");
 
-  SIGFOX_API_get_version(&version, &size, VERSION_RF);
+  OWLEY_API_get_version(&version, &size, VERSION_RF);
   print_n(version, size);
   AT_PRINTF("\r\n");
 
-  SIGFOX_API_get_version(&version, &size, VERSION_MCU);
+  OWLEY_API_get_version(&version, &size, VERSION_MCU);
   print_n(version, size);
   AT_PRINTF("\r\n");
 
-  SIGFOX_API_get_version(&version, &size, VERSION_SE);
+  OWLEY_API_get_version(&version, &size, VERSION_SE);
   print_n(version, size);
   AT_PRINTF("\r\n");
 
@@ -456,7 +456,7 @@ ATEerror_t AT_DevPac_get(const char *param)
 
   sfx_error_t error;
 
-  error = SIGFOX_API_get_initial_pac(SfxPac);
+  error = OWLEY_API_get_initial_pac(SfxPac);
 
   if (error != SFX_ERR_NONE)
   {
@@ -483,7 +483,7 @@ ATEerror_t AT_DevId_get(const char *param)
 
   sfx_error_t error;
 
-  error = SIGFOX_API_get_device_id(SfxId);
+  error = OWLEY_API_get_device_id(SfxId);
 
   if (error != SFX_ERR_NONE)
   {
@@ -606,7 +606,7 @@ ATEerror_t AT_test_cw(const char *param)
 
     E2P_Read_ConfigWords(sfx_rc, config_words);
 
-    SIGFOX_API_stop_continuous_transmission();
+    OWLEY_API_stop_continuous_transmission();
     /*reopen after test*/
     if (SIGFOX_reopen_and_reconf(sfx_rc, config_words) != SFX_ERR_NONE)
     {
@@ -615,8 +615,8 @@ ATEerror_t AT_test_cw(const char *param)
   }
   else if ((freq > ((uint32_t) 100e6)) && (freq < ((uint32_t) 1e9)))
   {
-    SIGFOX_API_close();
-    if (SIGFOX_API_start_continuous_transmission(freq, SFX_NO_MODULATION) != SFX_ERR_NONE)
+    OWLEY_API_close();
+    if (OWLEY_API_start_continuous_transmission(freq, SFX_NO_MODULATION) != SFX_ERR_NONE)
     {
       return AT_PARAM_ERROR;
     }
@@ -624,8 +624,8 @@ ATEerror_t AT_test_cw(const char *param)
   else if ((freq >  100) && (freq <  1000))
   {
     /* user meant Mega... */
-    SIGFOX_API_close();
-    if (SIGFOX_API_start_continuous_transmission(freq * 1000000, SFX_NO_MODULATION) != SFX_ERR_NONE)
+    OWLEY_API_close();
+    if (OWLEY_API_start_continuous_transmission(freq * 1000000, SFX_NO_MODULATION) != SFX_ERR_NONE)
     {
       return AT_PARAM_ERROR;
     }
@@ -683,7 +683,7 @@ ATEerror_t AT_test_pn(const char *param)
 
     E2P_Read_ConfigWords(sfx_rc, config_words);
 
-    SIGFOX_API_stop_continuous_transmission();
+    OWLEY_API_stop_continuous_transmission();
     /*reopen after test*/
     if (SIGFOX_reopen_and_reconf(sfx_rc, config_words) != SFX_ERR_NONE)
     {
@@ -692,8 +692,8 @@ ATEerror_t AT_test_pn(const char *param)
   }
   else if ((freq > ((uint32_t) 100e6)) && (freq < ((uint32_t) 1e9)))
   {
-    SIGFOX_API_close();
-    if (SIGFOX_API_start_continuous_transmission(freq, sfx_bitrate) != SFX_ERR_NONE)
+    OWLEY_API_close();
+    if (OWLEY_API_start_continuous_transmission(freq, sfx_bitrate) != SFX_ERR_NONE)
     {
       return AT_PARAM_ERROR;
     }
@@ -701,8 +701,8 @@ ATEerror_t AT_test_pn(const char *param)
   else if ((freq >  100) && (freq <  1000))
   {
     /* user meant Mega... */
-    SIGFOX_API_close();
-    if (SIGFOX_API_start_continuous_transmission(freq * 1000000, sfx_bitrate) != SFX_ERR_NONE)
+    OWLEY_API_close();
+    if (OWLEY_API_start_continuous_transmission(freq * 1000000, sfx_bitrate) != SFX_ERR_NONE)
     {
       return AT_PARAM_ERROR;
     }
@@ -798,7 +798,7 @@ ATEerror_t AT_test_mode(const char *param)
     return AT_PARAM_ERROR;
   }
 
-  SIGFOX_API_close();
+  OWLEY_API_close();
   /*rc not propagated to mcu_delay. Set it now*/
   E2P_Write_Rc(rc);
 
@@ -880,7 +880,7 @@ ATEerror_t AT_outOfBand_run(const char *param)
   /* USER CODE BEGIN AT_outOfBand_run_1 */
 
   /* USER CODE END AT_outOfBand_run_1 */
-  SIGFOX_API_send_outofband(SFX_OOB_SERVICE);
+  OWLEY_API_send_outofband(SFX_OOB_SERVICE);
 
   return AT_OK;
   /* USER CODE BEGIN AT_outOfBand_run_2 */
@@ -930,7 +930,7 @@ ATEerror_t AT_ChannelConfigFcc_set(const char *param)
   {
     sfx_rc_t rc = RC2;
 
-    if ((SIGFOX_API_close()) != SFX_ERR_NONE)
+    if ((OWLEY_API_close()) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -938,7 +938,7 @@ ATEerror_t AT_ChannelConfigFcc_set(const char *param)
     {
       return AT_ERROR;
     }
-    if (SIGFOX_API_set_std_config(config_words, (sfx_bool) timer_state) != SFX_ERR_NONE)
+    if (OWLEY_API_set_std_config(config_words, (sfx_bool) timer_state) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -948,7 +948,7 @@ ATEerror_t AT_ChannelConfigFcc_set(const char *param)
   {
     sfx_rc_t rc = RC4;
 
-    if ((SIGFOX_API_close()) != SFX_ERR_NONE)
+    if ((OWLEY_API_close()) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -956,7 +956,7 @@ ATEerror_t AT_ChannelConfigFcc_set(const char *param)
     {
       return AT_ERROR;
     }
-    if (SIGFOX_API_set_std_config(config_words, (sfx_bool) timer_state) != SFX_ERR_NONE)
+    if (OWLEY_API_set_std_config(config_words, (sfx_bool) timer_state) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -1041,7 +1041,7 @@ ATEerror_t AT_rc_set(const char *param)
 
     E2P_Write_Rc(SgfxRcId);
 
-    if ((SIGFOX_API_close()) != SFX_ERR_NONE)
+    if ((OWLEY_API_close()) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -1061,7 +1061,7 @@ ATEerror_t AT_rc_set(const char *param)
 
     E2P_Read_ConfigWords(SgfxRcId, config_words);
 
-    if ((SIGFOX_API_close()) != SFX_ERR_NONE)
+    if ((OWLEY_API_close()) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -1070,7 +1070,7 @@ ATEerror_t AT_rc_set(const char *param)
       return AT_ERROR;
     }
 
-    if (SIGFOX_API_set_std_config(config_words, RC2_SET_STD_TIMER_ENABLE) != SFX_ERR_NONE)
+    if (OWLEY_API_set_std_config(config_words, RC2_SET_STD_TIMER_ENABLE) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -1089,7 +1089,7 @@ ATEerror_t AT_rc_set(const char *param)
 
       E2P_Read_ConfigWords(SgfxRcId, config_words);
 
-      if ((SIGFOX_API_close()) != SFX_ERR_NONE)
+      if ((OWLEY_API_close()) != SFX_ERR_NONE)
       {
         return AT_ERROR;
       }
@@ -1098,7 +1098,7 @@ ATEerror_t AT_rc_set(const char *param)
         return AT_ERROR;
       }
 
-      if (SIGFOX_API_set_std_config(config_words, NA) != SFX_ERR_NONE)
+      if (OWLEY_API_set_std_config(config_words, NA) != SFX_ERR_NONE)
       {
         return AT_ERROR;
       }
@@ -1115,7 +1115,7 @@ ATEerror_t AT_rc_set(const char *param)
 
       E2P_Read_ConfigWords(SgfxRcId, config_words);
 
-      if ((SIGFOX_API_close()) != SFX_ERR_NONE)
+      if ((OWLEY_API_close()) != SFX_ERR_NONE)
       {
         return AT_ERROR;
       }
@@ -1124,7 +1124,7 @@ ATEerror_t AT_rc_set(const char *param)
         return AT_ERROR;
       }
 
-      if (SIGFOX_API_set_std_config(config_words, NA) != SFX_ERR_NONE)
+      if (OWLEY_API_set_std_config(config_words, NA) != SFX_ERR_NONE)
       {
         return AT_ERROR;
       }
@@ -1145,7 +1145,7 @@ ATEerror_t AT_rc_set(const char *param)
 
     E2P_Read_ConfigWords(SgfxRcId, config_words);
 
-    if ((SIGFOX_API_close()) != SFX_ERR_NONE)
+    if ((OWLEY_API_close()) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -1154,7 +1154,7 @@ ATEerror_t AT_rc_set(const char *param)
       return AT_ERROR;
     }
 
-    if (SIGFOX_API_set_std_config(config_words, RC4_SET_STD_TIMER_ENABLE) != SFX_ERR_NONE)
+    if (OWLEY_API_set_std_config(config_words, RC4_SET_STD_TIMER_ENABLE) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -1171,7 +1171,7 @@ ATEerror_t AT_rc_set(const char *param)
 
     E2P_Read_ConfigWords(SgfxRcId, config_words);
 
-    if ((SIGFOX_API_close()) != SFX_ERR_NONE)
+    if ((OWLEY_API_close()) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -1180,7 +1180,7 @@ ATEerror_t AT_rc_set(const char *param)
       return AT_ERROR;
     }
 
-    if (SIGFOX_API_set_std_config(config_words, NA) != SFX_ERR_NONE)
+    if (OWLEY_API_set_std_config(config_words, NA) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -1192,7 +1192,7 @@ ATEerror_t AT_rc_set(const char *param)
 
     E2P_Write_Rc(SgfxRcId);
 
-    if ((SIGFOX_API_close()) != SFX_ERR_NONE)
+    if ((OWLEY_API_close()) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -1210,7 +1210,7 @@ ATEerror_t AT_rc_set(const char *param)
 
     E2P_Write_Rc(SgfxRcId);
 
-    if ((SIGFOX_API_close()) != SFX_ERR_NONE)
+    if ((OWLEY_API_close()) != SFX_ERR_NONE)
     {
       return AT_ERROR;
     }
@@ -1512,7 +1512,7 @@ static sfx_error_t SIGFOX_reopen_and_reconf(sfx_rc_enum_t sfx_rc,  sfx_u32 *conf
 
       if (error == SFX_ERR_NONE)
       {
-        error = SIGFOX_API_set_std_config(config_words, RC2_SET_STD_TIMER_ENABLE);
+        error = OWLEY_API_set_std_config(config_words, RC2_SET_STD_TIMER_ENABLE);
       }
 
       break;
@@ -1525,7 +1525,7 @@ static sfx_error_t SIGFOX_reopen_and_reconf(sfx_rc_enum_t sfx_rc,  sfx_u32 *conf
 
       if (error == SFX_ERR_NONE)
       {
-        error = SIGFOX_API_set_std_config(config_words, NA);
+        error = OWLEY_API_set_std_config(config_words, NA);
       }
 
       break;
@@ -1538,7 +1538,7 @@ static sfx_error_t SIGFOX_reopen_and_reconf(sfx_rc_enum_t sfx_rc,  sfx_u32 *conf
 
       if (error == SFX_ERR_NONE)
       {
-        error = SIGFOX_API_set_std_config(config_words, NA);
+        error = OWLEY_API_set_std_config(config_words, NA);
       }
 
       break;
@@ -1551,7 +1551,7 @@ static sfx_error_t SIGFOX_reopen_and_reconf(sfx_rc_enum_t sfx_rc,  sfx_u32 *conf
 
       if (error == SFX_ERR_NONE)
       {
-        error = SIGFOX_API_set_std_config(config_words, RC4_SET_STD_TIMER_ENABLE);
+        error = OWLEY_API_set_std_config(config_words, RC4_SET_STD_TIMER_ENABLE);
       }
 
       break;
@@ -1564,7 +1564,7 @@ static sfx_error_t SIGFOX_reopen_and_reconf(sfx_rc_enum_t sfx_rc,  sfx_u32 *conf
 
       if (error == SFX_ERR_NONE)
       {
-        error = SIGFOX_API_set_std_config(config_words, NA);
+        error = OWLEY_API_set_std_config(config_words, NA);
       }
 
       break;
@@ -1621,13 +1621,13 @@ static sfx_error_t testmode_12(sfx_rc_enum_t rc_enum)
   E2P_Write_KeyType(CREDENTIALS_KEY_PUBLIC);
 
   /* Only call SIGFOX_API_send_xxx */
-  sfx_err = SIGFOX_API_send_frame(test_data, 1 /* size of the test data */, (sfx_u8 *)SFX_NULL, 2, SFX_FALSE);
+  sfx_err = OWLEY_API_send_frame(test_data, 1 /* size of the test data */, (sfx_u8 *)SFX_NULL, 2, SFX_FALSE);
 
   /* Switch back key type */
   E2P_Write_KeyType(key);
 
   /* Close the lib before return */
-  SIGFOX_API_close();
+  OWLEY_API_close();
 
   return sfx_err;
   /* USER CODE BEGIN testmode_12_2 */

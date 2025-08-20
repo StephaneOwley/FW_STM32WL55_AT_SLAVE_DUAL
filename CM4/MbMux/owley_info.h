@@ -64,13 +64,13 @@ typedef struct
 /**
   * @brief initialize the SigfoxInfo capabilities table
   */
-void SigfoxInfo_Init(void);
+void OwleyInfo_Init(void);
 
 /**
   * @brief returns the pointer to the SigfoxInfo capabilities table
   * @return  SigfoxInfo_t pointer
   */
-SigfoxInfo_t *SigfoxInfo_GetPtr(void);
+SigfoxInfo_t *OwleyInfo_GetPtr(void);
 
 /* USER CODE BEGIN EFP */
 

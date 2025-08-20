@@ -66,7 +66,7 @@ extern RadioEvents_t RfApiRadioEvents;
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-static SigfoxCallback_t SigfoxCallbacks = { SYS_GetBatteryLevel,
+static OwleyCallback_t OwleyCallbacks = { SYS_GetBatteryLevel,
                                             GetTemperatureLevel
                                           };
 
@@ -150,9 +150,9 @@ void Sigfox_Init(void)
   error = st_sigfox_open(sfx_rc);
 
   /* Init SigfoxInfo capabilities table (redundant: Cm0 is supposed to have done it already) */
-  SigfoxInfo_Init();
+  OwleyInfo_Init();
 
-  SigfoxRegionInfo = SigfoxInfo_GetPtr();
+  SigfoxRegionInfo = OwleyInfo_GetPtr();
   if (SigfoxRegionInfo->Region == 0)
   {
     APP_PRINTF("error: At least one region shall be defined : RC1 to RC7 \n\r");
@@ -160,7 +160,7 @@ void Sigfox_Init(void)
   }
 
   /* Register GetBatteryLevel and GetTemperatureLevel functions */
-  Sigfox_Register(&SigfoxCallbacks);
+  Owley_Register(&OwleyCallbacks);
   /* USER CODE BEGIN Sigfox_Init_ErrorCheck */
   if (1U == E2P_Read_AtEcho())
   {
@@ -217,7 +217,7 @@ static sfx_error_t st_sigfox_open(sfx_rc_enum_t sfx_rc)
 
       if (error == SFX_ERR_NONE)
       {
-        error = SIGFOX_API_set_std_config(config_words, RC2_SET_STD_TIMER_ENABLE);
+        error = OWLEY_API_set_std_config(config_words, RC2_SET_STD_TIMER_ENABLE);
       }
 
       break;
@@ -230,7 +230,7 @@ static sfx_error_t st_sigfox_open(sfx_rc_enum_t sfx_rc)
 
       if (error == SFX_ERR_NONE)
       {
-        error = SIGFOX_API_set_std_config(config_words, NA);
+        error = OWLEY_API_set_std_config(config_words, NA);
       }
       break;
     }
@@ -242,7 +242,7 @@ static sfx_error_t st_sigfox_open(sfx_rc_enum_t sfx_rc)
 
       if (error == SFX_ERR_NONE)
       {
-        error = SIGFOX_API_set_std_config(config_words, NA);
+        error = OWLEY_API_set_std_config(config_words, NA);
       }
       break;
     }
@@ -254,7 +254,7 @@ static sfx_error_t st_sigfox_open(sfx_rc_enum_t sfx_rc)
 
       if (error == SFX_ERR_NONE)
       {
-        error = SIGFOX_API_set_std_config(config_words, RC4_SET_STD_TIMER_ENABLE);
+        error = OWLEY_API_set_std_config(config_words, RC4_SET_STD_TIMER_ENABLE);
       }
       break;
     }
@@ -266,7 +266,7 @@ static sfx_error_t st_sigfox_open(sfx_rc_enum_t sfx_rc)
 
       if (error == SFX_ERR_NONE)
       {
-        error = SIGFOX_API_set_std_config(config_words, NA);
+        error = OWLEY_API_set_std_config(config_words, NA);
       }
       break;
     }
