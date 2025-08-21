@@ -1,26 +1,21 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    app_sigfox.c
-  * @author  MCD Application Team
-  * @brief   Application of the Sigfox Middleware
+  * @file    app_owley.c
+  * @author  Owley Team
+  * @brief   Application of the OWLEY Middleware
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
+  * Copyright (c) OWLEY
   *
   ******************************************************************************
   */
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
-#include "app_sigfox.h"
-#include "sgfx_app.h"
+#include "app_owley.h"
+#include "owley_app.h"
 #include "sys_app.h"
 #include "stm32_seq.h"
 

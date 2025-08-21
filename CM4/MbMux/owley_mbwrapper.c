@@ -27,7 +27,7 @@
 #include "stm32_mem.h"
 #include "sys_app.h"
 #include "st_sigfox_api.h"
-#include "sgfx_app.h"
+#include "owley_app.h"
 #include "owley_info.h"
 
 /* USER CODE BEGIN Includes */

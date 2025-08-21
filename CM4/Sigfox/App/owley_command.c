@@ -1,18 +1,13 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    sgfx_command.c
-  * @author  MCD Application Team
+  * @file    owley_command.c
+  * @author  Owley Team
   * @brief   main command driver dedicated to command AT
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
+  * Copyright (c) OWLEY
   *
   ******************************************************************************
   */
@@ -21,8 +16,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include <string.h>
 #include "platform.h"
-#include "sgfx_at.h"
-#include "sgfx_command.h"
+#include "owley_at.h"
+#include "owley_command.h"
 
 /* USER CODE BEGIN Includes */
 

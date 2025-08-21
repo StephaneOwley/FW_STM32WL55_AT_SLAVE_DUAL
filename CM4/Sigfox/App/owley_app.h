@@ -1,32 +1,30 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    app_sigfox.h
-  * @author  MCD Application Team
-  * @brief   Header of application of the Sigfox Middleware
-   ******************************************************************************
+  * @file    owley_app.h
+  * @author  Owley Team
+  * @brief   provides code for the application of the OWLEY Middleware
+  ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
+  * Copyright (c) Owley
   *
   ******************************************************************************
   */
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __APP_SIGFOX_H__
-#define __APP_SIGFOX_H__
+#ifndef __SGFX_APP_H__
+#define __SGFX_APP_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#include "stm32wlxx.h"
+#include "stm32wlxx_hal.h"
+#include "adc_if.h"
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -37,7 +35,6 @@ extern "C" {
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
-#define DEFAULT_RC SFX_RC1
 /* USER CODE BEGIN EC */
 
 /* USER CODE END EC */
@@ -47,21 +44,16 @@ extern "C" {
 
 /* USER CODE END EV */
 
-/* Exported macro ------------------------------------------------------------*/
+/* Exported macros -----------------------------------------------------------*/
 /* USER CODE BEGIN EM */
 
 /* USER CODE END EM */
 
-/* Exported Functions Prototypes ---------------------------------------------*/
+/* Exported functions prototypes ---------------------------------------------*/
 /**
   * @brief  Init Sigfox Application
   */
-void MX_Owley_Init(void);
-
-/**
-  * @brief  entry Sigfox Process or scheduling
-  */
-void MX_Owley_Process(void);
+void Owley_Init(void);
 
 /* USER CODE BEGIN EFP */
 
@@ -71,4 +63,4 @@ void MX_Owley_Process(void);
 }
 #endif
 
-#endif /*__APP_SIGFOX_H__*/
+#endif /*__SGFX_APP_H__*/

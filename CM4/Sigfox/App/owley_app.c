@@ -1,18 +1,14 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    sgfx_app.c
-  * @author  MCD Application Team
-  * @brief   provides code for the application of the sigfox Middleware
+  * @file    owley_app.c
+  * @author  Owley Team
+  * @brief   provides code for the application of the Owley Middleware
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) Owley.
   * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -21,7 +17,7 @@
 /* Includes ------------------------------------------------------------------*/
 
 #include "st_sigfox_api.h"
-#include "sgfx_app.h"
+#include "owley_app.h"
 #include "app_version.h"
 #include "radio.h"
 #include "sys_conf.h"
@@ -29,7 +25,7 @@
 #include "sys_app.h"
 #include "stm32_seq.h"
 #include "utilities_def.h"
-#include "sgfx_command.h"
+#include "owley_command.h"
 #include "owley_mbwrapper.h"
 #include "owley_info.h"
 #include "mbmuxif_sys.h"

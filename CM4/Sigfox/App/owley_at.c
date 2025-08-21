@@ -1,9 +1,9 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    sgfx_at.c
-  * @author  MCD Application Team
-  * @brief   Header for driver sgfx_at.c module
+  * @file    owley_at.c
+  * @author  Owley Team
+  * @brief   Header for driver owley_at.c module
   ******************************************************************************
   * @attention
   *
@@ -22,7 +22,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
-#include "sgfx_at.h"
+#include "owley_at.h"
 #include "sigfox_types.h"
 #include "st_sigfox_api.h"
 #include "usart_if.h"
@@ -122,12 +122,12 @@ static ErrorStatus isHex(char Char);
 static uint8_t Char2Nibble(char Char);
 
 /**
-  * @brief  reopens Sigfox and restores radio configuration as from EEPROM
+  * @brief  reopens OWLEY and restores radio configuration as from EEPROM
   * @param  sfx_rc region configuration
   * @param  config_words configuration parameters
   * @return sfx_error_t status
   */
-static sfx_error_t SIGFOX_reopen_and_reconf(sfx_rc_enum_t sfx_rc,  sfx_u32 *config_words);
+static sfx_error_t OWLEY_reopen_and_reconf(sfx_rc_enum_t sfx_rc,  sfx_u32 *config_words);
 
 /**
   * @brief  run testmode 12
@@ -264,7 +264,7 @@ ATEerror_t AT_SendFrame(const char *param)
     }
   }
 
-  /*Send Bytes to Sigfox Network */
+  /*Send Bytes to Owley Network */
   if (dlFlag == 0)
   {
     error = OWLEY_API_send_frame(ul_msg, ul_size, dl_msg, txRepeat, SFX_FALSE);
@@ -344,7 +344,7 @@ ATEerror_t AT_SendHexFrame(const char *param)
     }
   }
 
-  /*Send Bytes to Sigfox Network */
+  /*Send Bytes to Owley Network */
   if (dlFlag == 0)
   {
     error = OWLEY_API_send_frame(ul_msg, ul_size, dl_msg, txRepeat, SFX_FALSE);
@@ -395,13 +395,13 @@ ATEerror_t AT_version_get(const char *param)
   sfx_u8 *version;
   sfx_u8 size;
 
-  /* Get CM4 Sigfox APP version*/
+  /* Get CM4 Owley APP version*/
   APP_LOG(TS_OFF, VLEVEL_M, "M4_APP_VERSION:      V%X.%X.%X\r\n",
           (uint8_t)(APP_VERSION_MAIN),
           (uint8_t)(APP_VERSION_SUB1),
           (uint8_t)(APP_VERSION_SUB2));
 
-  /* Get CM0 Sigfox APP version*/
+  /* Get CM0 Owley APP version*/
   p_cm0plus_specific_features_info = MBMUXIF_SystemGetFeatCapabInfoPtr(FEAT_INFO_SYSTEM_ID);
   feature_version = p_cm0plus_specific_features_info->Feat_Info_Feature_Version;
   APP_LOG(TS_OFF, VLEVEL_M, "M0PLUS_APP_VERSION:  V%X.%X.%X\r\n",
@@ -409,10 +409,10 @@ ATEerror_t AT_version_get(const char *param)
           (uint8_t)(feature_version >> 16),
           (uint8_t)(feature_version >> 8));
 
-  /* Get MW Sigfox info */
+  /* Get MW OWLEY info */
   p_cm0plus_specific_features_info = MBMUXIF_SystemGetFeatCapabInfoPtr(FEAT_INFO_OWLEY_ID);
   feature_version = p_cm0plus_specific_features_info->Feat_Info_Feature_Version;
-  APP_LOG(TS_OFF, VLEVEL_M, "MW_SIGFOX_VERSION:   V%X.%X.%X\r\n",
+  APP_LOG(TS_OFF, VLEVEL_M, "MW_OWLEY_VERSION:   V%X.%X.%X\r\n",
           (uint8_t)(feature_version >> 24),
           (uint8_t)(feature_version >> 16),
           (uint8_t)(feature_version >> 8));
@@ -425,7 +425,7 @@ ATEerror_t AT_version_get(const char *param)
           (uint8_t)(feature_version >> 16),
           (uint8_t)(feature_version >> 8));
 
-  OWLEY_API_get_version(&version, &size, VERSION_SIGFOX);
+  OWLEY_API_get_version(&version, &size, VERSION_OWLEY);
   print_n(version, size);
   AT_PRINTF("\r\n");
 
@@ -608,7 +608,7 @@ ATEerror_t AT_test_cw(const char *param)
 
     OWLEY_API_stop_continuous_transmission();
     /*reopen after test*/
-    if (SIGFOX_reopen_and_reconf(sfx_rc, config_words) != SFX_ERR_NONE)
+    if (OWLEY_reopen_and_reconf(sfx_rc, config_words) != SFX_ERR_NONE)
     {
       return AT_RECONF_ERROR;
     }
@@ -685,7 +685,7 @@ ATEerror_t AT_test_pn(const char *param)
 
     OWLEY_API_stop_continuous_transmission();
     /*reopen after test*/
-    if (SIGFOX_reopen_and_reconf(sfx_rc, config_words) != SFX_ERR_NONE)
+    if (OWLEY_reopen_and_reconf(sfx_rc, config_words) != SFX_ERR_NONE)
     {
       return AT_RECONF_ERROR;
     }
@@ -833,7 +833,7 @@ ATEerror_t AT_test_mode(const char *param)
 
   E2P_Read_ConfigWords(rc_enum_restore, config_words_restore);
 
-  if (SIGFOX_reopen_and_reconf(rc_enum_restore, config_words_restore) != SFX_ERR_NONE)
+  if (OWLEY_reopen_and_reconf(rc_enum_restore, config_words_restore) != SFX_ERR_NONE)
   {
     at_status = AT_RECONF_ERROR;
   }
@@ -1488,11 +1488,11 @@ static uint8_t Char2Nibble(char Char)
   /* USER CODE END Char2Nibble_2 */
 }
 
-static sfx_error_t SIGFOX_reopen_and_reconf(sfx_rc_enum_t sfx_rc,  sfx_u32 *config_words)
+static sfx_error_t OWLEY_reopen_and_reconf(sfx_rc_enum_t sfx_rc,  sfx_u32 *config_words)
 {
-  /* USER CODE BEGIN SIGFOX_reopen_and_reconf_1 */
+  /* USER CODE BEGIN OWLEY_reopen_and_reconf_1 */
 
-  /* USER CODE END SIGFOX_reopen_and_reconf_1 */
+  /* USER CODE END OWLEY_reopen_and_reconf_1 */
   sfx_error_t error = SFX_ERR_NONE;
 
   /*record RCZ*/
@@ -1592,9 +1592,9 @@ static sfx_error_t SIGFOX_reopen_and_reconf(sfx_rc_enum_t sfx_rc,  sfx_u32 *conf
     }
   }
   return error;
-  /* USER CODE BEGIN SIGFOX_reopen_and_reconf_2 */
+  /* USER CODE BEGIN OWLEY_reopen_and_reconf_2 */
 
-  /* USER CODE END SIGFOX_reopen_and_reconf_2 */
+  /* USER CODE END OWLEY_reopen_and_reconf_2 */
 }
 
 static sfx_error_t testmode_12(sfx_rc_enum_t rc_enum)
@@ -1615,12 +1615,12 @@ static sfx_error_t testmode_12(sfx_rc_enum_t rc_enum)
   E2P_Read_ConfigWords(rc_enum, config_words);
 
   /*open for test mode 12 with right rc_enum and conf*/
-  sfx_err = SIGFOX_reopen_and_reconf(rc_enum, config_words);
+  sfx_err = OWLEY_reopen_and_reconf(rc_enum, config_words);
 
   /* Switch public key ON */
   E2P_Write_KeyType(CREDENTIALS_KEY_PUBLIC);
 
-  /* Only call SIGFOX_API_send_xxx */
+  /* Only call OWLEY_API_send_xxx */
   sfx_err = OWLEY_API_send_frame(test_data, 1 /* size of the test data */, (sfx_u8 *)SFX_NULL, 2, SFX_FALSE);
 
   /* Switch back key type */

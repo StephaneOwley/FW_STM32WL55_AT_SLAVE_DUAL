@@ -377,7 +377,7 @@ typedef enum
  *******************************/
 typedef enum
 {
-    VERSION_SIGFOX    = 0, /*!< Sigfox Version */
+    VERSION_OWLEY    = 0, /*!< Sigfox Version */
     VERSION_MCU       = 1, /*!< MCU Version */
     VERSION_RF        = 2, /*!< RF Version */
     VERSION_SE        = 3, /*!< SE Version */
