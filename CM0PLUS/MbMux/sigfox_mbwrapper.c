@@ -33,6 +33,9 @@
 #include "sigfox_monarch_api.h"
 #include "sigfox_info.h"
 #include "utilities_def.h"
+// test
+#include "radio.h"
+extern RadioEvents_t RfApiRadioEvents;
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -172,13 +175,32 @@ void Process_Sigfox_Cmd(MBMUX_ComParam_t *ComObj)
       break;
 
     case SIGFOX_START_CONTINUOUS_ID:
+      // debut test
+      if ((sfx_modulation_type_t)com_buffer[1]== 0)
+      {
+    	  APP_LOG(TS_ON, VLEVEL_M, "INIT RF\r");
+    	  Radio.Init(&RfApiRadioEvents);
+    	  APP_LOG(TS_ON, VLEVEL_M, "SETCHANNEL RF at Freq %d\n\r",(sfx_u32)com_buffer[0]);
+    	  Radio.SetChannel((sfx_u32)com_buffer[0]);
+    	  Radio.SetTxContinuousWave((sfx_u32)com_buffer[0], 15, 10000);
+    	  //Radio.TxCw(15);
+    	  // fin test
+    	  status = 0;
+      }
+      else
+      {
       status = SIGFOX_API_start_continuous_transmission((sfx_u32)com_buffer[0], (sfx_modulation_type_t)com_buffer[1]);
+      }
+      // test
       /* prepare response buffer */
       ComObj->ParamCnt = 0; /* reset ParamCnt */
       ComObj->ReturnVal = (uint32_t) status;
       break;
 
     case SIGFOX_STOP_CONTINUOUS_ID:
+      // Test
+      Radio.Init(&RfApiRadioEvents);
+      // test
       status = SIGFOX_API_stop_continuous_transmission();
       /* prepare response buffer */
       ComObj->ParamCnt = 0; /* reset ParamCnt */
