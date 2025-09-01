@@ -324,7 +324,8 @@ sfx_error_t OWLEY_API_start_continuous_transmission(sfx_u32 frequency, sfx_modul
   com_obj->MsgId = OWLEY_START_CONTINUOUS_ID;
   com_buffer = com_obj->ParamBuf;
   com_buffer[i++] = (uint32_t) frequency;
-  com_buffer[i++] = (uint32_t) aOwleyMbWrapShareBuffer;
+  //  com_buffer[i++] = (uint32_t) aOwleyMbWrapShareBuffer; // BUG CORRECTION
+  com_buffer[i++] = (uint32_t) type;
 
   com_obj->ParamCnt = i;
   MBMUXIF_OwleySendCmd();
