@@ -363,6 +363,35 @@ sfx_error_t OWLEY_API_stop_continuous_transmission(void)
   /* USER CODE END OWLEY_API_stop_continuous_transmission_2 */
 }
 
+
+sfx_error_t OWLEY_API_start_loc_transmission(sfx_u32 frequency, sfx_u32 power)
+{
+  /* USER CODE BEGIN OWLEY_API_start_loc_transmission_1 */
+
+  /* USER CODE END OWLEY_API_start_loc_transmission_1 */
+  MBMUX_ComParam_t *com_obj;
+  uint32_t *com_buffer;
+  uint16_t i = 0;
+  uint32_t ret;
+
+  com_obj = MBMUXIF_GetOwleyFeatureCmdComPtr();
+  com_obj->MsgId = OWLEY_LOC_ID;
+  com_buffer = com_obj->ParamBuf;
+  com_buffer[i++] = (uint32_t) frequency;
+  com_buffer[i++] = (uint32_t) power;
+
+  com_obj->ParamCnt = i;
+  MBMUXIF_OwleySendCmd();
+  /* waiting for event */
+  /* once event is received and semaphore released: */
+  ret = com_obj->ReturnVal;
+  return (sfx_error_t) ret;
+  /* USER CODE BEGIN OWLEY_API_start_continuous_transmission_2 */
+
+  /* USER CODE END OWLEY_API_start_continuous_transmission_2 */
+}
+
+
 sfx_error_t OWLEY_API_get_version(sfx_u8 **version, sfx_u8 *size, sfx_version_type_t type)
 {
   /* USER CODE BEGIN OWLEY_API_get_version_1 */

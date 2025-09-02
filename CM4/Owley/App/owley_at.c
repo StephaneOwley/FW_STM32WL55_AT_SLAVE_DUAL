@@ -641,6 +641,55 @@ ATEerror_t AT_test_cw(const char *param)
   /* USER CODE END AT_test_cw_2 */
 }
 
+ATEerror_t AT_owley_geoloc(const char *param)
+{
+  /* USER CODE BEGIN AT_test_cw_1 */
+
+  /* USER CODE END AT_test_cw_1 */
+  uint32_t freq = 0;
+  uint32_t power = 0;
+
+  /* convert AT param to sgfx param */
+  /* ul_size, ul_msg[ul_size], dlFlag, txRepeat*/
+  if (tiny_sscanf(param, "%u,%u", &freq, &power) > 2)
+  {
+    return AT_PARAM_ERROR;
+  }
+
+  if (freq == 0)
+  {
+    sfx_rc_enum_t sfx_rc = E2P_Read_Rc();
+
+    sfx_u32 config_words[3] = {0};
+
+    E2P_Read_ConfigWords(sfx_rc, config_words);
+
+    OWLEY_API_stop_continuous_transmission();
+    /*reopen after test*/
+    if (OWLEY_reopen_and_reconf(sfx_rc, config_words) != SFX_ERR_NONE)
+    {
+      return AT_RECONF_ERROR;
+    }
+  }
+  else if ((freq > ((uint32_t) 100e6)) && (freq < ((uint32_t) 1e9)))
+  {
+    OWLEY_API_close();
+    if (OWLEY_API_start_loc_transmission(freq, power) != SFX_ERR_NONE)
+    {
+      return AT_PARAM_ERROR;
+    }
+  }
+  else
+  {
+    return AT_PARAM_ERROR;
+  }
+
+  return AT_OK;
+  /* USER CODE BEGIN AT_test_cw_2 */
+
+  /* USER CODE END AT_test_cw_2 */
+}
+
 ATEerror_t AT_test_pn(const char *param)
 {
   /* USER CODE BEGIN AT_test_pn_1 */

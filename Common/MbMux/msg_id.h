@@ -76,7 +76,7 @@ typedef enum
   SIGFOX_GET_BATTERY_LEVEL_CB_ID,
   SIGFOX_GET_TEMPERATURE_LEVEL_CB_ID,
   /* USER CODE BEGIN Sigfox_MsgIdTypeDef */
-
+  OWLEY_LOC_ID,
   /* USER CODE END Sigfox_MsgIdTypeDef */
   SIGFOX_MSGID_LAST
 } Sigfox_MsgIdTypeDef;

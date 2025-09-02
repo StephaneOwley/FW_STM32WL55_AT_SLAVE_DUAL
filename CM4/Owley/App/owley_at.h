@@ -91,6 +91,7 @@ typedef enum eATEerror
 #define AT_RSSICAL    "$RSSICAL"
 #define ATE           "E"
 #define AT_VL         "+VL"
+#define AT_OW         "$OW"
 
 /* USER CODE BEGIN EM */
 
@@ -214,6 +215,13 @@ ATEerror_t AT_bat_get(const char *param);
   * @retval AT_OK
   */
 ATEerror_t AT_test_cw(const char *param);
+
+/**
+  * @brief  Test Owley Geoloc
+  * @param  param String parameter
+  * @retval AT_OK
+  */
+ATEerror_t AT_owley_geoloc(const char *param);
 
 /**
   * @brief  Tx Test with prbs9 modulation

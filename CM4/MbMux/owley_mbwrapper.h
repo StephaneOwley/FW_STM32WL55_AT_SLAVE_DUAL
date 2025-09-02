@@ -94,6 +94,27 @@ void Owley_Register(OwleyCallback_t *OwleyCallback);
 //
 sfx_error_t OWLEY_API_open(sfx_rc_t *rc);
 
+
+/*!******************************************************************
+ * \fn sfx_error_t OWLEY_API_start_loc_transmission(sfx_u32 frequency, sfx_u32 power);
+ * \brief Executes an Conituous Owley Geolocation Frame Emission
+ *        SIGFOX_API_stop_continuous_transmission has to be called to stop the continuous transmission.
+ *
+ * \param[in] sfx_u32 frequency                Frequency at which the signal has to be generated
+ * \param[in] sfx_u32 power                    Frame Tx Output Power (dBm)
+ *
+ * \retval  The sfx_error_t is composed of the following :
+ *
+ *    MSB_____________________________________________LSB
+ *    15                      8|7                     0
+ *     |                       |                      |
+ *     |   MANUF_ERROR_CODE    |  SIGFOX_ERROR_CODE   |
+ *     |_______________________|______________________|
+ *
+ *  SIGFOX_ERROR_CODE for this function : XX
+ *******************************************************************/
+sfx_error_t OWLEY_API_start_loc_transmission(sfx_u32 frequency, sfx_u32 power);
+
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */

@@ -317,7 +317,16 @@ static const struct ATCommand_s ATCommand[] =
     .run = AT_return_error,
   },
   /* USER CODE BEGIN ATCommand */
-
+  {
+    .string = AT_OW,
+    .size_string = sizeof(AT_OW) - 1,
+#ifndef NO_HELP
+    .help_string = "AT"AT_OW"=<frequency> frequency in Hz, <power> output  power in dBm. Owley Rescue Frame. To stop put <frequency>=0 \r\n",
+#endif /* !NO_HELP */
+    .get = AT_return_error,
+    .set = AT_owley_geoloc,
+    .run = AT_return_error,
+  },
   /* USER CODE END ATCommand */
 };
 
