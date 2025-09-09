@@ -34,10 +34,6 @@
 #include "sys_app.h" /*for APP_LOG*/
 #include "platform.h"
 
-// test
-// #include "radio_def.h"
-//extern RadioEvents_t RfApiRadioEvents;
-
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -360,14 +356,8 @@ sfx_u8 RF_API_start_continuous_transmission(sfx_modulation_type_t type)
       /* USER CODE BEGIN RF_API_start_continuous_transmission_NO_MODULATION_1 */
 
       /* USER CODE END RF_API_start_continuous_transmission_NO_MODULATION_1 */
-      //Test
-      //Radio.TxCw(power);
-      //APP_LOG(TS_ON, VLEVEL_M, "INIT");
-      // Radio.Init(&RfApiRadioEvents);
-      // APP_LOG(TS_ON, VLEVEL_M, "SETCONTCW");
-      // Radio.SetChannel((sfx_u32)com_buffer[0]);
-      // Radio.SetTxContinuousWave((sfx_u32)com_buffer[0], 15, 10000);
-      // fin test
+      Radio.TxCw(power);
+
       /* USER CODE BEGIN RF_API_start_continuous_transmission_NO_MODULATION_2 */
 
       /* USER CODE END RF_API_start_continuous_transmission_NO_MODULATION_2 */

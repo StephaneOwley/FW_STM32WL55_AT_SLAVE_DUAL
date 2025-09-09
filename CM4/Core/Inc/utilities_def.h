@@ -81,12 +81,17 @@ typedef enum
 
   /* USER CODE END CFG_SEQ_Task_Id_t_0 */
   CFG_SEQ_Task_MbSystemNotifRcv,
-  CFG_SEQ_Task_MbOwleyNotifRcv,
+  CFG_SEQ_Task_MbSigfoxNotifRcv,
   CFG_SEQ_Task_MbRadioNotifRcv,
   CFG_SEQ_Evt_Monarch,
   CFG_SEQ_Task_Vcom,
   /* USER CODE BEGIN CFG_SEQ_Task_Id_t */
-
+  CFG_SEQ_Task_MbOwleyNotifRcv,
+  CFG_SEQ_Task_OwleyTx,
+  CFG_SEQ_Task_OwleyAckTx,       /* UL DA (ack DL) */
+  CFG_SEQ_Task_OwleyRescueStartStopTx, /* UL DF (pattern) */
+  CFG_SEQ_Task_ButtonEvt,         /* ISR bouton */
+  CFG_SEQ_NB_TASKS,
   /* USER CODE END CFG_SEQ_Task_Id_t */
   CFG_SEQ_Task_NBR
 } CFG_SEQ_Task_Id_t;
@@ -99,10 +104,10 @@ typedef enum
   /* CM4 */
   CFG_SEQ_Evt_MbSystemRespRcv,
   CFG_SEQ_Evt_MbKmsRespRcv,
-  CFG_SEQ_Evt_MbOwleyRespRcv,
+  CFG_SEQ_Evt_MbSigfoxRespRcv,
   CFG_SEQ_Evt_MbRadioRespRcv,
   /* USER CODE BEGIN CFG_SEQ_IdleEvt_Id_t */
-
+  CFG_SEQ_Evt_MbOwleyRespRcv,
   /* USER CODE END CFG_SEQ_IdleEvt_Id_t */
   CFG_SEQ_Evt_NBR
 } CFG_SEQ_IdleEvt_Id_t;

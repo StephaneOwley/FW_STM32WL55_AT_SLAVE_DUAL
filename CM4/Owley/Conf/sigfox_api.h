@@ -195,6 +195,8 @@
 #define SFX_ERR_CALLBACK_MONARCH_PATTERN_FREQUENCY_RESULT_WRONG_PATTERN     (sfx_u8)(0xBB) /*!< The pattern is not one of the requested frequencies sent by the lib - call the stop_rc_scan to come back in IDLE state*/
 #define SFX_ERR_CALLBACK_MONARCH_PATTERN_FREQUENCY_RESULT_WRONG_FREQ        (sfx_u8)(0xBC) /*!< The frequency is not one of the requested frequencies sent by the lib - call the stop_rc_scan to come back in IDLE state*/
 
+#define OWLEY_ERR_CALLBACK_FREQUENCY								        (sfx_u8)(0xBD) /*!< The frequency is not one of the requested frequencies sent by the lib - call the stop_rc_scan to come back in IDLE state*/
+
 /*
  * -----------------------------------------------------------------------------
  * Bytes reserved for SIGFOX ADDONS ERROR CODES : From 0xC0 to 0xDF

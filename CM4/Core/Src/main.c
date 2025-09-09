@@ -18,12 +18,12 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "app_owley.h"
+//#include "app_sigfox.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "app_owley.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -63,6 +63,7 @@ void SystemClock_Config(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -85,9 +86,9 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_Owley_Init();
+  // MX_Sigfox_Init();
   /* USER CODE BEGIN 2 */
-
+  MX_Owley_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -95,9 +96,10 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    MX_Owley_Process();
+    //MX_Sigfox_Process();
 
     /* USER CODE BEGIN 3 */
+	  MX_Owley_Process();
   }
   /* USER CODE END 3 */
 }

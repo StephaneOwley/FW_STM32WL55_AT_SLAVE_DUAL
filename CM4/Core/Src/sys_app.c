@@ -34,15 +34,15 @@
 #include "mbmuxif_sys.h"
 #include "mbmuxif_trace.h"
 #include "mbmuxif_radio.h"
-#include "mbmuxif_owley.h"
-#include "owley_app.h"
-
+//#include "mbmuxif_sigfox.h"
+//#include "sgfx_app.h"
 #ifdef ALLOW_KMS_VIA_MBMUX /* currently not supported */
 /* #include "mbmuxif_kms.h" */
 #endif /* ALLOW_KMS_VIA_MBMUX */
 
 /* USER CODE BEGIN Includes */
-
+#include "owley_app.h"
+#include "mbmuxif_owley.h"
 /* USER CODE END Includes */
 
 /* External variables ---------------------------------------------------------*/

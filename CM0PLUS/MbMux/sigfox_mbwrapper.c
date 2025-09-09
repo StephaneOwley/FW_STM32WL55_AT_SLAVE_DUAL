@@ -33,12 +33,10 @@
 #include "sigfox_monarch_api.h"
 #include "sigfox_info.h"
 #include "utilities_def.h"
-#include "stm32_timer.h"
-// test
-#include "radio.h"
-extern RadioEvents_t RfApiRadioEvents;
 /* USER CODE BEGIN Includes */
-
+#include "stm32_timer.h"
+#include "radio.h"
+//extern RadioEvents_t RfApiRadioEvents;
 /* USER CODE END Includes */
 
 /* External variables ---------------------------------------------------------*/
@@ -60,6 +58,7 @@ extern RadioEvents_t RfApiRadioEvents;
 
 /* USER CODE BEGIN PD */
 // ---- CODE OWLEY GEOLOC ----
+extern RadioEvents_t RfApiRadioEvents;
 typedef enum { LOC_STATE_OFF = 0, LOC_STATE_ON } loc_state_t;
 
 static UTIL_TIMER_Object_t LocTimer;    // Timer RTC (UTILS ST)
@@ -217,80 +216,84 @@ void Process_Sigfox_Cmd(MBMUX_ComParam_t *ComObj)
       break;
 
     case SIGFOX_START_CONTINUOUS_ID:
-      // debut test
-      if ((sfx_modulation_type_t)com_buffer[1]== 0)
-      {
-    	  APP_LOG(TS_ON, VLEVEL_M, "INIT RF\r");
-    	  Radio.Init(&RfApiRadioEvents);
-    	  APP_LOG(TS_ON, VLEVEL_M, "SETCHANNEL RF at Freq %d\n\r",(sfx_u32)com_buffer[0]);
-    	  Radio.SetChannel((sfx_u32)com_buffer[0]);
-    	  Radio.SetTxContinuousWave((sfx_u32)com_buffer[0], 15, 10000);
-    	  //Radio.TxCw(15);
-    	  // fin test
-    	  status = 0;
-      }
-      else
-      {
-      status = SIGFOX_API_start_continuous_transmission((sfx_u32)com_buffer[0], (sfx_modulation_type_t)com_buffer[1]);
-      }
-      // test
+    	/* USER CODE BEGIN CONT 1*/
+    	// Correction Bug transmission CW
+    	if ((sfx_modulation_type_t)com_buffer[1]== 0)
+    	{
+    		APP_LOG(TS_ON, VLEVEL_M, "INIT RF\r");
+    		Radio.Init(&RfApiRadioEvents);
+    		APP_LOG(TS_ON, VLEVEL_M, "SETCHANNEL RF at Freq %d\n\r",(sfx_u32)com_buffer[0]);
+    		Radio.SetChannel((sfx_u32)com_buffer[0]);
+    		Radio.SetTxContinuousWave((sfx_u32)com_buffer[0], 15, 10000);
+    		//Radio.TxCw(15);
+    		// fin test
+    		status = 0;
+    	}
+    	else
+    	{
+    	/* USER CODE END CONT 1*/
+    	status = SIGFOX_API_start_continuous_transmission((sfx_u32)com_buffer[0], (sfx_modulation_type_t)com_buffer[1]);
+    	/* USER CODE BEGIN CONT 2*/
+    	}
+    	/* USER CODE END CONT 2*/
       /* prepare response buffer */
       ComObj->ParamCnt = 0; /* reset ParamCnt */
       ComObj->ReturnVal = (uint32_t) status;
       break;
 
     case SIGFOX_STOP_CONTINUOUS_ID:
-      // Test
+      /* USER CODE BEGIN CONT STOP 1*/
       // stop timer if any
       locActive = false;
       UTIL_TIMER_Stop(&LocTimer);
       // end stop timer if any
       Radio.Init(&RfApiRadioEvents);
-      // test
+      /* USER CODE STOP CONT STOP 1*/
       status = SIGFOX_API_stop_continuous_transmission();
       /* prepare response buffer */
       ComObj->ParamCnt = 0; /* reset ParamCnt */
       ComObj->ReturnVal = (uint32_t) status;
       break;
-
+    /* USER CODE BEGIN LOC 1*/
     case OWLEY_LOC_ID:
-      /* SYNCHRINOUS VERSION
-      APP_LOG(TS_ON, VLEVEL_M, "INIT OWLEY GEOLOC_1\r");
-      Radio.Init(&RfApiRadioEvents);
-      APP_LOG(TS_ON, VLEVEL_M, "SETCHANNEL OWLEY GEOLOC at Freq %d\n\r",(sfx_u32)com_buffer[0]);
-      Radio.SetChannel((sfx_u32)com_buffer[0]);
-      APP_LOG(TS_ON, VLEVEL_M, "SETPOWER OWLEY GEOLOC at %d\n\r",(sfx_u32)com_buffer[1]);
-      Radio.SetTxContinuousWave((sfx_u32)com_buffer[0], (sfx_u32)com_buffer[1], 3);
-      Radio.TxCw((sfx_u32)com_buffer[1]);
-      */
-      status = 0;
-      /* ASYNCHRONOUS VERSION */
-      /* prepare response buffer */
-      uint32_t freq  = com_buffer[0];
-      int32_t  power = (int32_t)com_buffer[1];   // dBm recommandé
-   	  // Sécurités minimales
-   	  if (!(freq > 100000000UL && freq < 1000000000UL)) {
-   	    ComObj->ParamCnt = 0; ComObj->ReturnVal = (uint32_t) status; break;
-   	  }
-   	  APP_LOG(TS_ON, VLEVEL_M, "INIT OWLEY GEOLOC_1\r");
-      LOC_InitOnce();
-      // Mettre la radio dans un état propre UNE FOIS
-      Radio.Init(&RfApiRadioEvents);
+          /* SYNCHRINOUS VERSION
+          APP_LOG(TS_ON, VLEVEL_M, "INIT OWLEY GEOLOC_1\r");
+          Radio.Init(&RfApiRadioEvents);
+          APP_LOG(TS_ON, VLEVEL_M, "SETCHANNEL OWLEY GEOLOC at Freq %d\n\r",(sfx_u32)com_buffer[0]);
+          Radio.SetChannel((sfx_u32)com_buffer[0]);
+          APP_LOG(TS_ON, VLEVEL_M, "SETPOWER OWLEY GEOLOC at %d\n\r",(sfx_u32)com_buffer[1]);
+          Radio.SetTxContinuousWave((sfx_u32)com_buffer[0], (sfx_u32)com_buffer[1], 3);
+          Radio.TxCw((sfx_u32)com_buffer[1]);
+          */
+          status = 0;
+          /* ASYNCHRONOUS VERSION */
+          /* prepare response buffer */
+          uint32_t freq  = com_buffer[0];
+          int32_t  power = (int32_t)com_buffer[1];   // dBm recommandé
+       	  // Sécurités minimales
+       	  if (!(freq > 100000000UL && freq < 1000000000UL)) {
+       	    ComObj->ParamCnt = 0; ComObj->ReturnVal = (uint32_t) status; break;
+       	  }
+       	  APP_LOG(TS_ON, VLEVEL_M, "INIT OWLEY GEOLOC_1\r");
+          LOC_InitOnce();
+          // Mettre la radio dans un état propre UNE FOIS
+          Radio.Init(&RfApiRadioEvents);
 
-      locFreq       = freq;
-      locPower_dbm  = power;
-      locState      = LOC_STATE_OFF;
-      locActive     = true;
-      APP_LOG(TS_ON, VLEVEL_M, "SETCHANNEL OWLEY GEOLOC at Freq %d\n\r",(sfx_u32)com_buffer[0]);
-      APP_LOG(TS_ON, VLEVEL_M, "SETPOWER OWLEY GEOLOC at %d\n\r",(sfx_u32)com_buffer[1]);
-      // Démarrer la séquence non bloquante : premier déclenchement immédiat
-      UTIL_TIMER_Stop(&LocTimer);
-      UTIL_TIMER_SetPeriod(&LocTimer, 1);   // 1 ms pour armer le premier ON
-      UTIL_TIMER_Start(&LocTimer);
-      // Réponse immédiate au CM4 : OK, la séquence tourne en tâche de fond
-      ComObj->ParamCnt = 0;
-      ComObj->ReturnVal = (uint32_t) status;
-      break;
+          locFreq       = freq;
+          locPower_dbm  = power;
+          locState      = LOC_STATE_OFF;
+          locActive     = true;
+          APP_LOG(TS_ON, VLEVEL_M, "SETCHANNEL OWLEY GEOLOC at Freq %d\n\r",(sfx_u32)com_buffer[0]);
+          APP_LOG(TS_ON, VLEVEL_M, "SETPOWER OWLEY GEOLOC at %d\n\r",(sfx_u32)com_buffer[1]);
+          // Démarrer la séquence non bloquante : premier déclenchement immédiat
+          UTIL_TIMER_Stop(&LocTimer);
+          UTIL_TIMER_SetPeriod(&LocTimer, 1);   // 1 ms pour armer le premier ON
+          UTIL_TIMER_Start(&LocTimer);
+          // Réponse immédiate au CM4 : OK, la séquence tourne en tâche de fond
+          ComObj->ParamCnt = 0;
+          ComObj->ReturnVal = (uint32_t) status;
+          break;
+    /* USER CODE BEGIN LOC 1*/
 
     case SIGFOX_GET_VERSION_ID:
       status = SIGFOX_API_get_version((sfx_u8 **) com_buffer[0], (sfx_u8 *) com_buffer[1], (sfx_version_type_t)com_buffer[2]);
